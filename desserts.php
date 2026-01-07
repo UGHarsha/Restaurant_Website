@@ -5,9 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Desserts</title>
-    <!-- Bootstrap -->
+	<!-- Bootstrap -->
 	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
 	    <link href="css/style.css" rel="stylesheet">
+	<link href="css/pages-style.css" rel="stylesheet">
 	<!-- font awesome cdn link -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	   <link rel="icon" href="images/logo.png" type="image/x-icon">
@@ -17,51 +18,7 @@
 <!-- header section starts -->
 <?php include 'user_header.php'; ?>
 <!-- header section ends -->
-<!--topic starts-->
-  <div class="container-topic">
-           <h1 class="container-topic-heading">Desserts</h1>
-            </div>
-  <br>
-<!--topic ends-->
-	  <!-- classic cakes starts-->
-  <div class="container-fluid">
-    <div class="container">
-		<h1 align="center" class="welcome-b">Welcome to Our Desserts Menu</h1>
-		<p class="about-b" align="center">Indulge in our delightful dessert menu,
-			<br>featuring a tempting array of sweet treats to end
-			<br>your meal on a perfect note.</p><br>
-		
-		<h4 class="topic-b">1. Featured Classic Cakes</h4><br>
-      <div class="row">
-		
-			<div class="col-lg-4">
-	        <div class="card col-md-4 col-lg-12">
-			<img class="card-img-top img-fluid" src="images/desserts/d-1.jpg" alt="Card image cap">
-	          <div class="card-body">
-			    <h5 class="card-title-1">Red Velvet Cake</h5>
-				 <p class="card-text">Lush red velvet cake with a hint of cocoa, layered with smooth cream cheese frosting and finished with a touch of red velvet crumbs.</p>
-				  <p class="price">$22.99</p>
-				   <a href="#" class="btn btn-primary">Order Now</a> 
-              </div>
-            </div>
-	      </div>
-		  
-        <div class="col-lg-4">
-	        <div class="card col-md-4 col-lg-12">
-				<img class="card-img-top img-fluid" src="images/desserts/d-2.jpg" alt="Card image cap">
-	          <div class="card-body">
-			    <h5 class="card-title-1"> Classic Chocolate Cake</h5>
-				 <p class="card-text">Rich and moist chocolate cake layered with velvety chocolate ganache and topped with a sprinkle of cocoa powder.</p>
-				  <p class="price">$22.99</p>
-				    <a href="#" class="btn btn-primary">Order Now</a> 
-              </div>
-            </div>
-	      </div>
-        <div class="col-lg-4">
-	        <div class="card col-md-4 col-lg-12">
-				<img class="card-img-top img-fluid" src="images/desserts/d-3.jpg" alt="Card image cap">
-	          <div class="card-body">
-			    <h5 class="card-title-1"> Lemon Drizzle Cake</h5>
+<?php include 'user_footer.php'; ?>
 				 <p class="card-text">Light and airy lemon cake with a tangy lemon glaze, offering a refreshing citrus flavor in every bite.</p>
 				  <p class="price">$22.99</p>
 				   <a href="#" class="btn btn-primary">Order Now</a> 
@@ -505,8 +462,6 @@
 	  
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
 	<script src="js/jquery-3.4.1.min.js"></script>
-
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="js/popper.min.js"></script> 
 	<script src="js/bootstrap-4.4.1.js"></script>
 	  <script>

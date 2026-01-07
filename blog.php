@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blog</title>
-    <!-- Bootstrap -->
-	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-	    <link href="css/style.css" rel="stylesheet">
-	<!-- font awesome cdn link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	   <link rel="icon" href="images/logo.png" type="image/x-icon">
-  </head>
-  <body>
-  	<!-- body code goes here -->
-<!-- header section starts -->
-<?php include 'user_header.php'; ?>
-<!-- header section ends -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blog - ZestyZoomer</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/home-style.css" rel="stylesheet">
+    <link href="css/pages-style.css" rel="stylesheet">
+</head>
+<body>
+    <?php include 'user_header.php'; ?>
 <!--topic starts-->
   <div class="container-topic">
            <h1 class="container-topic-heading">Blog</h1>
@@ -24,14 +20,25 @@
       
   
 <!--topic ends-->
-	  <br>
+	  <section class="container blog-intro">
+	    <h2 class="section-heading text-center">Global Flavors & Kitchen Stories</h2>
+	    <p class="text-center" style="max-width:900px;margin:10px auto 20px; color:#555;">
+	      Discover recipes, traditions, and cooking tips from around the world. Fresh ideas, authentic techniques, and Sri Lankan favorites.
+	    </p>
+	    <div class="text-center" style="margin-bottom:25px;">
+	      <a href="menu.php" class="btn btn-brand">Explore Menu</a>
+	      <a href="contact us.php" class="btn btn-outline-brand">Share a Recipe</a>
+	    </div>
+	  </section>
+
 	  <!--Grid Layout for Recent Blog Posts starts-->
 	  <div class="container-fluid">
 	    <div class="container">
-			<h4 class="topic-b" align="center"> "Global Flavors: Unique Recipes from Around the World."</h4><br>
+			<h4 class="topic-b text-center">Global Flavors: Unique Recipes from Around the World</h4>
+			<br>
 	      <div class="row">
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-1.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-1.jpg" alt="Shakshuka in skillet">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Shakshuka</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -62,7 +69,7 @@
               </div>
 	        </div>
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-2.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-2.jpg" alt="Korean Bibimbap bowl">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Korean Bibimbap</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -96,7 +103,7 @@
           </div>
 			<div class="row">
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-3.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-3.jpg" alt="Moroccan Tagine">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Moroccan Tagine</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -131,7 +138,7 @@
               </div>
 	        </div>
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-4.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-4.jpg" alt="Vietnamese Pho bowl">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Vietnamese Pho</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -175,7 +182,7 @@
           </div>
 		  <div class="row">
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-5.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-5.jpg" alt="Argentine Empanadas">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Argentine Empanadas</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -223,7 +230,7 @@
               </div>
 	        </div>
 	        <div class="col-lg-6">
-	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-6.jpg" alt="Card image cap">
+	          <div class="card col-md-4 col-lg-12"> <img class="card-img-top" src="images/b-6.jpg" alt="Japanese Ramen bowl">
 	            <div class="card-body">
 	              <h5 class="card-title-b">Japanese Ramen</h5>
 	              <h6 class="card-title-b">Ingredients:</h6>
@@ -265,93 +272,12 @@
 	    </div>
 	  </div>
 	   <!--Grid Layout for Recent Blog Posts ends-->
-  <!--footer starts-->
-<footer>
-	<div class="container-f">
-	<div class="row">
-	<div class="col-lg-4 col-md-6 square"><div class="logo-f"><span class="logo-1-f">Zesty</span><span class="logo-2-f">Zoomer</span></div>
-		<br><p class="about" align="justify">ZestyZoomer provides quick, delectable, fresh meal delivery. Savor our extensive menu, which is freshly prepared at your door using premium ingredients. ZestyZoomer offers easy dining experiences!</p></div>
-	<div class="col-lg-2 col-md-6 square">
-	<div class="heading-f">Menu</div>
-		<ul class="f-list">
-			<br>
-		<li><a href="breakfast.html">Breakfast</a></li>
-			<li><a href="lunch.html">Lunch</a></li>
-			<li><a href="dinner.html">Dinner</a></li>
-			<li><a href="sides.html">Sides</a></li>
-			<li><a href="desserts.html">Desserts</a></li>
-			<li><a href="beverages.html">Beverages</a></li>
-		</ul>
-	</div>
-	<div class="col-lg-2 col-md-6 square">
-	<div class="heading-f-l">Links</div>
-		<ul class="l-list">
-			<br>
-		<li><a href="index.html">Home</a></li>
-			<li><a href="about us.html">About Us</a></li>
-			<li><a href="blog.html">Blog</a></li>
-			<li><a href="contact us.html">Contact Us</a></li>
-		</ul>
-	</div>
-	<div class="col-lg-4 col-md-6 square">
-		<div class="heading-f">Contact</div>
-		<ul class="contact">
-			<br>
-		<li><i class="fa fa-phone" aria-hidden="true"></i> &nbsp;+94 77 800 9658</li>
-			<li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;zestyzoomer@gmail.com</a></li>
-		</ul>
-	</div>
-	</div>
-		<ul class="social-media">
-			<br>
-			<li><a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
-			<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-		</ul>
-	</div>
-	
-</footer>
-<div class="copy">&copy; copyright &amp; Reserved 2024.</div>
-	  <!--footer ends-->
+ 
 	  
 	  
 	  
 	  
 	  
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
-	<script src="js/jquery-3.4.1.min.js"></script>
-
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/popper.min.js"></script> 
-	<script src="js/bootstrap-4.4.1.js"></script>
-	  <script>
-      $(document).ready(function () {
-          // Handle dropdown menu toggle
-          $('header .nav-bar ul li:has(ul)').click(function (e) {
-              if ($(window).width() <= 991) {
-                  e.stopPropagation();
-                  $(this).find('ul').toggle();
-              }
-          });
-
-          // Close the dropdown if clicked outside
-          $(document).click(function (e) {
-              if ($(window).width() <= 991) {
-                  if (!$(e.target).closest('header').length) {
-                      $('header .nav-bar ul li ul').hide();
-                  }
-              }
-          });
-
-          // Handle the menu-bar checkbox for toggling the nav bar
-          $('#menu-bar').change(function () {
-              if ($(this).is(':checked')) {
-                  $('header .nav-bar').show();
-              } else {
-                  $('header .nav-bar').hide();
-                  $('header .nav-bar ul li ul').hide();
-              }
-          });
-      });
-    </script>
-  </body>
+<?php include 'user_footer.php'; ?>
+</body>
 </html>

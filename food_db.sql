@@ -83,6 +83,8 @@ CREATE TABLE `orders` (
 
 --
 -- Table structure for table `products`
+-- Note: Category values should be: 'main', 'desserts', or 'beverages'
+-- Previous categories (breakfast, lunch, dinner, sides) should be migrated to 'main'
 --
 
 CREATE TABLE `products` (

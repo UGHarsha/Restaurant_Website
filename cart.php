@@ -39,31 +39,21 @@ $grand_total = 0;
 
 ?>
 
-
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Zesty Zoomer</title>
-    <!-- Bootstrap -->
-	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-	  <link href="css/style.css" rel="stylesheet">
-	<!-- font awesome cdn link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	  <link rel="icon" href="images/logo.png" type="image/x-icon">
-  </head>
-  <body>
-  	<!-- body code goes here -->
-
-    <?php include 'user_header.php';
-
-    ?>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Cart - ZestyZoomer</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/home-style.css" rel="stylesheet">
+</head>
+<body>
+    <?php include 'user_header.php'; ?>
     
 
 <section class="products">
@@ -110,10 +100,11 @@ $grand_total = 0;
       <form action="" method="post">
          <button type="submit" class="delete-btn <?= ($grand_total > 1)?'':'disabled'; ?>" name="delete_all" onclick="return confirm('delete all from cart?');">Delete all</button>
       </form>
-      <a hre f="menu.php" class="btn_cart">continue shopping</a>
+      <a href="menu.php" class="btn_cart">continue shopping</a>
    </div>
 
 </section>
 
-<!-- header section starts -->
-
+<?php include 'user_footer.php'; ?>
+</body>
+</html>
