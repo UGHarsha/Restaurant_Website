@@ -1,0 +1,164 @@
+/* =========================
+   Blog layout styles
+   Clean, simple, responsive
+   ========================= */
+
+/* Theme colors */
+:root {
+  --c-accent: #F59E0B;
+  --c-dark: #8B4513;
+  --c-gold: #D4AF37;
+  --c-bg-soft: #FFF8E7;
+}
+
+/* ---------- Hero ---------- */
+.blog-hero {
+  background: linear-gradient(135deg, var(--c-accent), var(--c-dark));
+  color: #ffffff;
+  padding: 3rem 0;
+}
+
+.blog-hero__title {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 6px;
+}
+
+.blog-hero__subtitle {
+  max-width: 860px;
+  opacity: 0.95;
+  margin-bottom: 12px;
+}
+
+
+/* Filters removed by request */
+
+/* ---------- Blog Grid ---------- */
+.blog-section {
+  padding: 8px 0 28px;
+}
+
+.blog-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 992px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Post Card ---------- */
+.post-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.post-media {
+  height: 210px;
+  overflow: hidden;
+}
+
+.post-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.post-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin: 0;
+}
+
+/* Meta info */
+.post-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fbfbfc;
+  border: 1px solid #eef2f7;
+  color: #4a5568;
+}
+
+/* Excerpt */
+.post-excerpt {
+  color: #4b5563;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Summary button (native toggle) */
+.post-details > summary {
+  list-style: none;
+  cursor: pointer;
+  align-self: flex-start;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 800;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  display: inline-block;
+}
+.post-details > summary:hover { border-color: var(--c-accent); }
+.post-details[open] > summary { border-color: var(--c-accent); color: var(--c-accent); }
+
+/* ---------- Expanded Details ---------- */
+.post-details {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.post-details h4 {
+  margin: 10px 0 8px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: var(--c-dark);
+}
+
+.post-details ul,
+.post-details ol {
+  padding-left: 18px;
+  margin: 0 0 6px;
+}
+
+.post-details li {
+  margin: 4px 0;
+  color: #374151;
+}
+
+/* Pagination removed by request */

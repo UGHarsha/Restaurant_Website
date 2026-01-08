@@ -7,7 +7,8 @@
     <title>About Us - ZestyZoomer</title>
     <link rel="icon" href="images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+
+	<link href="css/navbar.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/home-style.css" rel="stylesheet">
     <link href="css/pages-style.css" rel="stylesheet">
@@ -17,7 +18,7 @@
 
 	<!-- About Hero -->
 	<section class="about-hero">
-		<div class="about-hero__bg" role="img" aria-label="Sri Lankan cuisine and dining"></div>
+		<div class="about-hero__bg" role="img" aria-label="Sri Lankan  dining"></div>
 		<div class="about-hero__content container">
 			<h1 class="about-hero__title">About ZestyZoomer</h1>
 			<p class="about-hero__subtitle">Authentic Sri Lankan flavors, crafted fresh and delivered with care</p>

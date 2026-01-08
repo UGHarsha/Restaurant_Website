@@ -49,6 +49,7 @@ $grand_total = 0;
     <link rel="icon" href="images/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/home-style.css" rel="stylesheet">
     <link href="css/pages-style.css" rel="stylesheet">
@@ -132,7 +133,7 @@ $grand_total = 0;
                 <div class="secondary-actions">
                     <form action="" method="post" class="clear-cart-form">
                         <button type="submit" class="clear-btn js-clear-cart" name="delete_all" onclick="return confirm('Clear entire cart?');">
-                            <i class="fa fa-trash"></i> Clear Cart
+                            <i class="fa fa-trash"></i> 
                         </button>
                     </form>
                     
