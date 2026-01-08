@@ -51,59 +51,100 @@ $grand_total = 0;
     <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/home-style.css" rel="stylesheet">
+    <link href="css/pages-style.css" rel="stylesheet">
 </head>
 <body>
     <?php include 'user_header.php'; ?>
     
+    <!-- Cart Header -->
+    <div class="container-topic">
+        <h1 class="container-topic-heading">Shopping Cart</h1>
+    </div>
 
-<section class="products">
-  <br>
-   <h1 class="cart">your cart</h1>
-
-   <div class="box-container">
-
-      <?php
+    <!-- Cart Content -->
+    <section class="container cart-section">
+        <div class="cart-items"><?php
          $grand_total = 0;
          $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
          $select_cart->execute([$user_id]);
          if($select_cart->rowCount() > 0){
             while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
       ?>
-      <form action="" method="post" class="box">
-         <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
-         <button type="submit" class="fa fa-times" name="delete" onclick="return confirm('delete this item?');"></button>
-         <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
-         <div class="name"><?= $fetch_cart['name']; ?></div>
-         <div class="flex">
-            <div class="price"><span>Rs.</span><?= $fetch_cart['price']; ?></div>
-            <input type="number" name="qty" class="qty" min="1" max="99" value="<?= $fetch_cart['quantity']; ?>" maxlength="2">
-            <button type="submit" class="fa fa-edit" name="update_qty"></button>
-         </div>
-         <div class="sub-total"> sub total : <span>Rs.<?= $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?>/-</span> </div>
-      </form>
-      <?php
+            <div class="cart-item" id="item-<?= $fetch_cart['id']; ?>" data-cart-id="<?= $fetch_cart['id']; ?>">
+                <form action="" method="post" class="cart-item-form" data-cart-id="<?= $fetch_cart['id']; ?>">
+                    <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
+                    
+                    <div class="cart-item-image">
+                        <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="<?= htmlspecialchars($fetch_cart['name']); ?>">
+                        <button type="submit" class="remove-btn js-remove-btn" name="delete" onclick="return confirm('Remove this item from cart?');" title="Remove Item">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-name"><?= htmlspecialchars($fetch_cart['name']); ?></h3>
+                        <div class="cart-item-price">Rs.<?= $fetch_cart['price']; ?></div>
+                    </div>
+                    
+                    <div class="cart-item-controls">
+                        <div class="quantity-control" data-cart-id="<?= $fetch_cart['id']; ?>">
+                            <button type="button" class="qty-btn qty-decrease" aria-label="Decrease Quantity">−</button>
+                            <div class="qty-display" id="qty-<?= $fetch_cart['id']; ?>"><?= $fetch_cart['quantity']; ?></div>
+                            <button type="button" class="qty-btn qty-increase" aria-label="Increase Quantity">+</button>
+                            <input type="hidden" name="qty" class="qty-input" value="<?= $fetch_cart['quantity']; ?>">
+                            <button type="submit" name="update_qty" style="display:none;" class="update-qty-btn"></button>
+                        </div>
+                        
+                        <div class="cart-item-subtotal" id="subtotal-<?= $fetch_cart['id']; ?>">
+                            Rs.<?= $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?>
+                        </div>
+                    </div>
+                </form>
+            </div><?php
                $grand_total += $sub_total;
             }
          }else{
-            echo '<p class="empty">your cart is empty</p>';
+            echo '<div class="empty-cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some delicious items to get started!</p>
+                    <a href="menu.php" class="btn btn-brand">Browse Menu</a>
+                  </div>';
          }
-      ?>
+      ?></div>
 
-   </div>
-
-  <div class="cart-total">
-      <p>cart total : <span>Rs. <?= $grand_total; ?></span></p> 
-      <a href="checkout.php" class="btn_cart <?= ($grand_total > 1)?'':'disabled'; ?>"> checkout</a>
-      </div>
-
-   <div class="more-btn">
-      <form action="" method="post">
-         <button type="submit" class="delete-btn <?= ($grand_total > 1)?'':'disabled'; ?>" name="delete_all" onclick="return confirm('delete all from cart?');">Delete all</button>
-      </form>
-      <a href="menu.php" class="btn_cart">continue shopping</a>
-   </div>
-
-</section>
+        <?php if($grand_total > 0): ?>
+        <!-- Cart Summary -->
+        <div class="cart-summary" id="cart-summary">
+            <div class="cart-total">
+                <h3>Order Total</h3>
+                <div class="total-line">
+                    <span class="total-label">Total:</span>
+                    <span class="total-amount" id="grand-total">Rs.<?= $grand_total; ?></span>
+                </div>
+            </div>
+                
+            <div class="cart-actions">
+                <a href="checkout.php" class="checkout-btn">
+                    <i class="fa fa-credit-card"></i> Proceed to Checkout
+                </a>
+                
+                <div class="secondary-actions">
+                    <form action="" method="post" class="clear-cart-form">
+                        <button type="submit" class="clear-btn js-clear-cart" name="delete_all" onclick="return confirm('Clear entire cart?');">
+                            <i class="fa fa-trash"></i> Clear Cart
+                        </button>
+                    </form>
+                    
+                    <a href="menu.php" class="continue-btn">
+                        <i class="fa fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <script src="js/cart.js"></script>
+    </section>
 
 <?php include 'user_footer.php'; ?>
 </body>
