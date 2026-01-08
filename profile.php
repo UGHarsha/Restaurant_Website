@@ -11,8 +11,7 @@ if(isset($_SESSION['user_id'])){
    header('location:index.php');
 };
 
-// no need to include cart or add-to-cart handlers on profile page
-// keep page focused on viewing profile details
+
 
 ?>
 

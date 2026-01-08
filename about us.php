@@ -176,7 +176,7 @@
 	  
 	  
 	  
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+	<!-- jQuery --> 
 	<script src="js/jquery-3.4.1.min.js"></script>
 
 <?php include 'user_footer.php'; ?>

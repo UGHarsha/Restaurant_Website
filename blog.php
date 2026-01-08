@@ -198,11 +198,11 @@
 			</article>
 		</div>
 
-		<!-- Pagination removed by request -->
+		
 	</section>
 
 	<?php include 'user_footer.php'; ?>
-	<!-- blog.js removed by request -->
+	
 </body>
 </html>
 </html>

@@ -1,8 +1,3 @@
-/* 
- * Sri Lankan Home Page Styles
- * Traditional colors inspired by Sri Lankan culture
- * Primary: #D4AF37 (Gold), #8B4513 (Brown), #006B3F (Green), #FF6B35 (Orange)
- */
 
 :root {
     --primary-gold: #D4AF37;
@@ -29,7 +24,7 @@ body {
 }
 
 
-/* Hero Section - Sri Lankan Style */
+/* Hero Section */
 .hero-section {
     position: relative;
     min-height: 600px;

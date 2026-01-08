@@ -1,9 +1,6 @@
-/* =========================
-   Blog layout styles
-   Clean, simple, responsive
-   ========================= */
 
-/* Theme colors */
+
+/* Blog color palette */
 :root {
   --c-accent: #F59E0B;
   --c-dark: #8B4513;
@@ -11,7 +8,7 @@
   --c-bg-soft: #FFF8E7;
 }
 
-/* ---------- Hero ---------- */
+/* Hero section */
 .blog-hero {
   background: linear-gradient(135deg, var(--c-accent), var(--c-dark));
   color: #ffffff;
@@ -31,9 +28,7 @@
 }
 
 
-/* Filters removed by request */
-
-/* ---------- Blog Grid ---------- */
+/* Blog cards layout */
 .blog-section {
   padding: 8px 0 28px;
 }
@@ -56,7 +51,7 @@
   }
 }
 
-/* ---------- Post Card ---------- */
+/* Post card styling */
 .post-card {
   background: #ffffff;
   border-radius: 14px;
@@ -93,7 +88,7 @@
   margin: 0;
 }
 
-/* Meta info */
+/* Post meta tags */
 .post-meta {
   display: flex;
   gap: 8px;
@@ -110,17 +105,18 @@
   color: #4a5568;
 }
 
-/* Excerpt */
+/* Post excerpt */
 .post-excerpt {
   color: #4b5563;
   margin: 0;
   overflow: hidden;
+  line-clamp: 2;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
 
-/* Summary button (native toggle) */
+/* Read more control */
 .post-details > summary {
   list-style: none;
   cursor: pointer;
@@ -136,7 +132,7 @@
 .post-details > summary:hover { border-color: var(--c-accent); }
 .post-details[open] > summary { border-color: var(--c-accent); color: var(--c-accent); }
 
-/* ---------- Expanded Details ---------- */
+/* Expanded details */
 .post-details {
   margin-top: 4px;
   padding-top: 10px;
@@ -161,4 +157,3 @@
   color: #374151;
 }
 
-/* Pagination removed by request */

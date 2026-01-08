@@ -30,7 +30,7 @@ include 'add_cart.php';
 
 <section class="hero-section">
     <div class="hero-background">
-        <img src="images/rice&curry.jpg" alt="Sri Lankan Rice & Curry" onerror="this.src='images/rice&curry.jpg'">
+        <img src="images/Main/rice&curry.jpg" alt="Sri Lankan Rice & Curry" onerror="this.src='images/rice&curry.jpg'">
     </div>
     <div class="hero-content">
         <h1 class="hero-title">Welcome to ZestyZoomer</h1>
@@ -51,7 +51,7 @@ include 'add_cart.php';
     <p class="section-subtitle">Choose from our carefully curated Sri Lankan food collections</p>
     <div class="categories-grid">
         <div class="category-card">
-            <img src="images/rice&curry.jpg" alt="Main Dishes" class="category-image" onerror="this.src='images/about-img.jpg'">
+            <img src="images/Main/rice-.jpg" alt="Main Dishes" class="category-image" onerror="this.src='images/about-img.jpg'">
             <div class="category-content">
                 <h3 class="category-name"> Main Dishes</h3>
                 <p class="category-description">Authentic rice & curry, hoppers, kottu, and traditional Sri Lankan mains that bring warmth to your table.</p>
@@ -59,7 +59,7 @@ include 'add_cart.php';
             </div>
         </div>
         <div class="category-card">
-            <img src="images/watalapn.jpg" alt="Desserts" class="category-image" onerror="this.src='images/about-img.jpg'">
+            <img src="images/desserts/watalapn.jpg" alt="Desserts" class="category-image" onerror="this.src='images/about-img.jpg'">
             <div class="category-content">
                 <h3 class="category-name"> Sweet Treats</h3>
                 <p class="category-description">Indulge in watalappan, kavum, kokis, and other traditional Sri Lankan sweets that melt in your mouth.</p>
@@ -82,7 +82,7 @@ include 'add_cart.php';
     <p class="section-subtitle">Freshly added items you don't want to miss!</p>
     <div class="products-grid">
         <?php
-        $select_products = $conn->prepare("SELECT * FROM `products` ORDER BY id DESC LIMIT 6");
+        $select_products = $conn->prepare("SELECT * FROM `products` ORDER BY id DESC LIMIT 4");
         $select_products->execute();
         
         if($select_products->rowCount() > 0){

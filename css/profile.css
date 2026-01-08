@@ -1,6 +1,4 @@
-/* Simple Profile Styles (scoped to profile pages) */
 
-/***** Common *****/
 .profile-page .container-topic,
 .profile-edit-page .container-topic {
   padding: 24px 16px 0;
@@ -14,7 +12,7 @@
 
 /***** View Profile *****/
 .profile-page section.user-details {
-  /* cancel any conflicting flex from navbar.css */
+ 
   display: block;
 }
 
@@ -58,7 +56,7 @@
   margin-top: 18px;
 }
 
-/* simple buttons reused on both pages */
+/* simple buttons */
 .btn-primary-sl,
 .btn-secondary-sl {
   display: inline-flex;
@@ -91,7 +89,7 @@
   transform: translateY(-1px);
 }
 
-/***** Edit Profile *****/
+/* Edit Profile */
 .profile-edit-page .profile-edit {
   max-width: 980px;
   margin: 16px auto 48px;
@@ -135,9 +133,9 @@
 
 .profile-edit-page textarea.box { resize: vertical; }
 
-/* small message style override if present */
+/* small message*/
 .profile-edit-page .message { 
-  background: #fff7ed; /* orange-50 */
+  background: #fff7ed; 
   border: 1px solid #ffedd5;
   color: #7c2d12;
   padding: 10px 12px;
