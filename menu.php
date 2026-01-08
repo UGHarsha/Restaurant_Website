@@ -19,23 +19,20 @@ include 'add_cart.php';
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Breakfast</title>
-    <!-- Bootstrap -->
-	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
-	    <link href="css/style.css" rel="stylesheet">
-	<!-- font awesome cdn link -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	   <link rel="icon" href="images/logo.png" type="image/x-icon">
-  </head>
-  <body>
-  	<!-- body code goes here -->
-<!-- header section starts -->
-<?php include 'user_header.php'; ?>
-<!-- header section ends -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu - ZestyZoomer</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+   <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/home-style.css" rel="stylesheet">
+</head>
+<body>
+    <?php include 'user_header.php'; ?>
 <!--topic starts-->
   <div class="container-topic">
            <h1 class="container-topic-heading">Breakfast</h1>
@@ -81,3 +78,12 @@ include 'add_cart.php';
             echo '<p class="empty">no products added yet!</p>';
          }
       ?>
+   </div>
+
+</section>
+        </div>
+    </div>
+
+<?php include 'user_footer.php'; ?>
+</body>
+</html>

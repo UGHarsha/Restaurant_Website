@@ -4,10 +4,11 @@ include 'connect.php';
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
-if(!isset($user_id)){
-   header('location:user_header.php');
+if($user_id === null){
+   // Redirect unauthenticated users to login page
+   header('location:login.php');
    exit;
 }
 
@@ -63,13 +64,15 @@ if(isset($_POST['order_btn'])){
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Checkout</title>
+   <title>Checkout - ZestyZoomer</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
    <!-- custom css file link  -->
+   <link rel="stylesheet" href="css/navbar.css">
    <link rel="stylesheet" href="css/style.css">
+   <link rel="stylesheet" href="css/pages-style.css">
 
 </head>
 <body>
@@ -80,7 +83,7 @@ if(isset($_POST['order_btn'])){
    <h1 class="container-topic-heading">Your Order Confirmation Process</h1>
 </div>     
 
-<section class="checkout">
+<section class="checkout-section">
    <?php
    $grand_total = 0;
    $cart_items = [];
@@ -93,52 +96,76 @@ if(isset($_POST['order_btn'])){
       }
       $total_products = implode(', ', $cart_items);
    ?>
+   <div class="checkout-grid">
+      <!-- Order Summary -->
+      <aside class="order-summary">
+         <h3 class="summary-title">Order Summary</h3>
+         <ul class="summary-items">
+            <?php
+            $select_cart2 = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+            $select_cart2->execute([$user_id]);
+            while($item = $select_cart2->fetch(PDO::FETCH_ASSOC)){
+               $line_total = ($item['price'] * $item['quantity']);
+            ?>
+               <li class="summary-item">
+                  <div class="item-info">
+                     <span class="item-name"><?= htmlspecialchars($item['name']); ?></span>
+                     <span class="item-meta">Rs.<?= $item['price']; ?> × <?= $item['quantity']; ?></span>
+                  </div>
+                  <div class="item-total">Rs.<?= $line_total; ?></div>
+               </li>
+            <?php } ?>
+         </ul>
+         <div class="summary-total">
+            <span>Total</span>
+            <strong id="checkout-grand">Rs.<?= $grand_total; ?></strong>
+         </div>
+      </aside>
 
-   <p><strong>Grand Total:</strong> RS.<?= $grand_total; ?></p>
-   
+      <!-- Checkout Form -->
+      <form action="" method="post" class="checkout-form" autocomplete="on">
+         <h3 class="form-title">Delivery & Payment</h3>
+         <div class="form-grid">
+            <div class="form-field">
+               <label for="name">Full name</label>
+               <input type="text" id="name" name="name" required placeholder="e.g., Sanduni Perera" maxlength="60">
+            </div>
+            <div class="form-field">
+               <label for="number">Phone number</label>
+               <input type="tel" id="number" name="number" required placeholder="e.g., 0712345678" pattern="[0-9]{9,10}" maxlength="10">
+            </div>
+            <div class="form-field">
+               <label for="email">Email</label>
+               <input type="email" id="email" name="email" required placeholder="you@example.com" maxlength="80">
+            </div>
+            <div class="form-field">
+               <label for="method">Payment method</label>
+               <select id="method" name="method">
+                  <option value="cash on delivery">Cash on Delivery</option>
+                  <option value="card payment">Card Payment</option>
+               </select>
+            </div>
+            <div class="form-field">
+               <label for="flat">Flat / House No.</label>
+               <input type="text" id="flat" name="flat" required placeholder="e.g., 12A" maxlength="32">
+            </div>
+            <div class="form-field">
+               <label for="city">City</label>
+               <input type="text" id="city" name="city" required placeholder="e.g., Colombo" maxlength="48">
+            </div>
+            <div class="form-field">
+               <label for="state">Street</label>
+               <input type="text" id="state" name="state" required placeholder="e.g., Galle Road" maxlength="64">
+            </div>
+         </div>
 
-   <form action="" method="post">
-      <h3>Place your order</h3>
-      <div class="flex">
-         <div class="inputBox">
-            <span>Your full name :</span>
-            <input type="text" name="name" required placeholder="Enter your full name">
-         </div>
-         <div class="inputBox">
-            <span>Your phone number :</span>
-            <input type="number" name="number" required placeholder="Enter your phone number">
-         </div>
-         <div class="inputBox">
-            <span>Your email :</span>
-            <input type="email" name="email" required placeholder="Enter your email">
-         </div>
-         <div class="inputBox">
-            <span>Payment method :</span>
-            <select name="method">
-               <option value="cash on delivery">Cash on Delivery</option>
-               <option value="card payment">Card Payment</option>
-            </select>
-         </div>
-         <div class="inputBox">
-            <span>Address :</span>
-            <input type="text" name="flat" required placeholder="Flat no.">
-         </div>
-         <div class="inputBox">
-            <span>City :</span>
-            <input type="text" name="city" required placeholder="City">
-         </div>
-         <div class="inputBox">
-            <span>Street :</span>
-            <input type="text" name="state" required placeholder="Street">
-         </div>
-      </div>
-      
-      <input type="hidden" name="total_products" value="<?= $total_products; ?>">
-      <input type="hidden" name="total_price" value="<?= $grand_total; ?>">
+         <input type="hidden" name="total_products" value="<?= $total_products; ?>">
+         <input type="hidden" name="total_price" value="<?= $grand_total; ?>">
 
-      <input type="submit" name="order_btn" value="Place Order" class="btn">
-   </form>
-   
+         <button type="submit" name="order_btn" class="btn-brand" style="width:100%;">Place Order</button>
+      </form>
+   </div>
+
    <?php } else { ?>
       <p>Your cart is empty.</p>
    <?php } ?>
