@@ -8,16 +8,14 @@ $admin_id = $_SESSION['admin_id'];
 
 if(!isset($admin_id)){
    header('location:admin_login.php');
-};
+   exit;
+}
 
 if(isset($_POST['submit'])){
 
-   $name = $_POST['name'];
-   $name = filter_var($name, FILTER_SANITIZE_STRING);
-   $pass = sha1($_POST['pass']);
-   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-   $cpass = sha1($_POST['cpass']);
-   $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
+   $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
+   $pass = $_POST['pass'];
+   $cpass = $_POST['cpass'];
 
    $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
    $select_admin->execute([$name]);
@@ -28,8 +26,9 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'confirm passowrd not matched!';
       }else{
+         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
          $insert_admin = $conn->prepare("INSERT INTO `admin`(name, password) VALUES(?,?)");
-         $insert_admin->execute([$name, $cpass]);
+         $insert_admin->execute([$name, $hashed_pass]);
          $message[] = 'new admin registered!';
       }
    }
@@ -72,21 +71,6 @@ if(isset($_POST['submit'])){
 </section>
 
 <!-- register admin section ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- custom js file link  -->
 <script src="../js/admin_script.js"></script>

@@ -8,13 +8,17 @@ $admin_id = $_SESSION['admin_id'];
 
 if(!isset($admin_id)){
    header('location:admin_login.php');
-};
+   exit;
+}
 
-if(isset($_GET['delete'])){
-   $delete_id = $_GET['delete'];
-   $delete_admin = $conn->prepare("DELETE FROM `admin` WHERE id = ?");
-   $delete_admin->execute([$delete_id]);
+if(isset($_POST['delete_admin'])){
+   $delete_id = (int)$_POST['delete_id'];
+   if($delete_id != $admin_id){ // prevent self-deletion
+      $delete_admin = $conn->prepare("DELETE FROM `admin` WHERE id = ?");
+      $delete_admin->execute([$delete_id]);
+   }
    header('location:admin_accounts.php');
+   exit;
 }
 
 ?>
@@ -58,10 +62,13 @@ if(isset($_GET['delete'])){
          while($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)){  
    ?>
    <div class="box">
-      <p> admin id : <span><?= $fetch_accounts['id']; ?></span> </p>
-      <p> username : <span><?= $fetch_accounts['name']; ?></span> </p>
+      <p> admin id : <span><?= htmlspecialchars($fetch_accounts['id']); ?></span> </p>
+      <p> username : <span><?= htmlspecialchars($fetch_accounts['name']); ?></span> </p>
       <div class="flex-btn">
-         <a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="delete-btn" onclick="return confirm('delete this account?');">delete</a>
+         <form action="" method="post" style="display:inline;">
+            <input type="hidden" name="delete_id" value="<?= $fetch_accounts['id']; ?>">
+            <button type="submit" name="delete_admin" class="delete-btn" onclick="return confirm('delete this account?');">delete</button>
+         </form>
          <?php
             if($fetch_accounts['id'] == $admin_id){
                echo '<a href="update_profile.php" class="option-btn">update</a>';
@@ -81,14 +88,6 @@ if(isset($_GET['delete'])){
 </section>
 
 <!-- admins accounts section ends -->
-
-
-
-
-
-
-
-
 
 <!-- custom js file link  -->
 <script src="../js/admin_script.js"></script>

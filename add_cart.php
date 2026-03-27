@@ -4,18 +4,15 @@ if(isset($_POST['add_to_cart'])){
 
    if($user_id == ''){
       header('location:login.php');
+      exit;
    }else{
 
-      $pid = $_POST['pid'];
-      $pid = filter_var($pid, FILTER_SANITIZE_STRING);
-      $name = $_POST['name'];
-      $name = filter_var($name, FILTER_SANITIZE_STRING);
-      $price = $_POST['price'];
-      $price = filter_var($price, FILTER_SANITIZE_STRING);
-      $image = $_POST['image'];
-      $image = filter_var($image, FILTER_SANITIZE_STRING);
-      $qty = $_POST['qty'];
-      $qty = filter_var($qty, FILTER_SANITIZE_STRING);
+      $pid = (int)$_POST['pid'];
+      $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
+      $price = (float)$_POST['price'];
+      $image = htmlspecialchars(trim($_POST['image']), ENT_QUOTES, 'UTF-8');
+      $qty = isset($_POST['qty']) ? (int)$_POST['qty'] : 1;
+      if($qty < 1) $qty = 1;
 
       $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE name = ? AND user_id = ?");
       $check_cart_numbers->execute([$name, $user_id]);

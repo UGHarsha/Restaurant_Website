@@ -1,276 +1,267 @@
-/**
- * Sri Lankan Home Page JavaScript
- * Handles animations, interactions, and dynamic content loading
- */
+﻿/* ======================================================
+   CEYLONBITES HOME - MODERN 2026 JS
+   ====================================================== */
+(function() {
+    'use strict';
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll for anchor links
-    initSmoothScroll();
-    
-    // Animate elements on scroll
-    initScrollAnimations();
-    
-    // Initialize category cards hover effects
-    initCategoryCards();
-    
-    // Add to cart functionality
-    initAddToCart();
-});
+    document.addEventListener('DOMContentLoaded', init);
 
-/**
- * Smooth scrolling for navigation links
- */
-function initSmoothScroll() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href !== '#' && document.querySelector(href)) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+    function init() {
+        typingEffect();
+        counterAnimation();
+        scrollReveal();
+        scrollToTop();
+        cartAnimation();
+        duplicateReviews();
+        pauseOnHover();
+        parallaxBanner();
+        touchScrollHint();
+    }
+
+    /* ===== TYPING EFFECT ===== */
+    function typingEffect() {
+        var el = document.getElementById('heroTyped');
+        if (!el) return;
+        var words = ['Authentic', 'Delicious', 'Spicy', 'Traditional', 'Homemade'];
+        var wordIndex = 0;
+        var charIndex = 0;
+        var isDeleting = false;
+        var typeSpeed = 100;
+
+        function type() {
+            var current = words[wordIndex];
+            if (isDeleting) {
+                el.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                el.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 120;
+            }
+
+            if (!isDeleting && charIndex === current.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 400;
+            }
+            setTimeout(type, typeSpeed);
+        }
+        setTimeout(type, 800);
+    }
+
+    /* ===== COUNTER ANIMATION (IntersectionObserver) ===== */
+    function counterAnimation() {
+        var statNums = document.querySelectorAll('.zz-hero__stat-num[data-target]');
+        if (!statNums.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+            statNums.forEach(function(el) {
+                el.textContent = el.getAttribute('data-target');
+            });
+            return;
+        }
+
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    animateNum(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statNums.forEach(function(el) { observer.observe(el); });
+
+        function animateNum(el) {
+            var target = parseFloat(el.getAttribute('data-target'));
+            var isDecimal = el.hasAttribute('data-decimal');
+            var duration = 1800;
+            var start = performance.now();
+
+            function tick(now) {
+                var elapsed = now - start;
+                var progress = Math.min(elapsed / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var val = target * eased;
+
+                if (isDecimal) {
+                    el.textContent = val.toFixed(1);
+                } else {
+                    el.textContent = Math.floor(val);
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(tick);
+                } else {
+                    el.textContent = isDecimal ? target.toFixed(1) : Math.floor(target);
+                }
+            }
+            requestAnimationFrame(tick);
+        }
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    function scrollReveal() {
+        var selectors = [
+            '.zz-section-top',
+            '.zz-cats__card',
+            '.zz-pcard',
+            '.zz-why__card',
+            '.zz-banner__content',
+            '.zz-reviews__card',
+            '.zz-cta__inner'
+        ];
+
+        var elements = document.querySelectorAll(selectors.join(','));
+        elements.forEach(function(el, i) {
+            el.classList.add('zz-reveal');
+        });
+
+        if (!('IntersectionObserver' in window)) {
+            elements.forEach(function(el) { el.classList.add('zz-reveal--visible'); });
+            return;
+        }
+
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('zz-reveal--visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        elements.forEach(function(el) { observer.observe(el); });
+
+        /* Stagger grid items */
+        stagger('.zz-cats__card');
+        stagger('.zz-pcard');
+        stagger('.zz-why__card');
+
+        function stagger(selector) {
+            document.querySelectorAll(selector).forEach(function(el, i) {
+                el.style.transitionDelay = (i * 0.1) + 's';
+            });
+        }
+    }
+
+    /* ===== SCROLL TO TOP ===== */
+    function scrollToTop() {
+        var btn = document.createElement('button');
+        btn.className = 'zz-scroll-top';
+        btn.innerHTML = '<i class="fa fa-chevron-up"></i>';
+        btn.setAttribute('aria-label', 'Scroll to top');
+        document.body.appendChild(btn);
+
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    if (window.scrollY > 500) {
+                        btn.classList.add('visible');
+                    } else {
+                        btn.classList.remove('visible');
+                    }
+                    ticking = false;
                 });
+                ticking = true;
             }
         });
-    });
-}
 
-/**
- * Animate elements when they come into view
- */
-function initScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+        btn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    /* ===== CART BUTTON ANIMATION ===== */
+    function cartAnimation() {
+        document.querySelectorAll('.zz-pcard__cart').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var icon = btn.querySelector('i');
+                if (!icon) return;
+                icon.className = 'fa fa-check';
+                btn.style.background = '#22c55e';
+                btn.style.color = '#fff';
+                setTimeout(function() {
+                    icon.className = 'fa fa-cart-plus';
+                    btn.style.background = '';
+                    btn.style.color = '';
+                }, 1200);
+            });
+        });
+    }
+
+    /* ===== DUPLICATE REVIEWS FOR INFINITE MARQUEE ===== */
+    function duplicateReviews() {
+        var scroll = document.getElementById('reviewScroll');
+        if (!scroll) return;
+        var html = scroll.innerHTML;
+        scroll.innerHTML = html + html;
+    }
+
+    /* ===== PAUSE MARQUEE ON HOVER/TOUCH ===== */
+    function pauseOnHover() {
+        var scroll = document.getElementById('reviewScroll');
+        if (!scroll) return;
+
+        scroll.addEventListener('mouseenter', function() {
+            scroll.style.animationPlayState = 'paused';
+        });
+        scroll.addEventListener('mouseleave', function() {
+            scroll.style.animationPlayState = 'running';
+        });
+        scroll.addEventListener('touchstart', function() {
+            scroll.style.animationPlayState = 'paused';
+        }, { passive: true });
+        scroll.addEventListener('touchend', function() {
+            setTimeout(function() {
+                scroll.style.animationPlayState = 'running';
+            }, 3000);
+        });
+    }
+
+    /* ===== PARALLAX BANNER ===== */
+    function parallaxBanner() {
+        var bannerBg = document.querySelector('.zz-banner__bg img');
+        if (!bannerBg) return;
+        var banner = document.querySelector('.zz-banner');
+        var ticking = false;
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    var rect = banner.getBoundingClientRect();
+                    var winH = window.innerHeight;
+                    if (rect.top < winH && rect.bottom > 0) {
+                        var progress = (winH - rect.top) / (winH + rect.height);
+                        var offset = (progress - 0.5) * 60;
+                        bannerBg.style.transform = 'translateY(' + offset + 'px) scale(1.05)';
+                    }
+                    ticking = false;
+                });
+                ticking = true;
             }
         });
-    }, observerOptions);
-
-    // Observe category cards
-    const categoryCards = document.querySelectorAll('.category-card');
-    categoryCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
-
-    // Observe product cards
-    const productCards = document.querySelectorAll('.product-card');
-    productCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
-
-    // Observe feature cards
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
-}
-
-/**
- * Category cards interactive effects
- */
-function initCategoryCards() {
-    const categoryCards = document.querySelectorAll('.category-card');
-    
-    categoryCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.zIndex = '10';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.zIndex = '1';
-        });
-    });
-}
-
-/**
- * Add to cart functionality with visual feedback
- */
-function initAddToCart() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-    
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            // Visual feedback
-            const originalText = this.textContent;
-            this.textContent = 'Added! ✓';
-            this.style.background = '#006B3F';
-            this.style.color = 'white';
-            
-            // Reset after 2 seconds
-            setTimeout(() => {
-                this.textContent = originalText;
-                this.style.background = '';
-                this.style.color = '';
-            }, 2000);
-            
-            // Animate cart icon in header (if exists)
-            animateCartIcon();
-        });
-    });
-}
-
-/**
- * Animate cart icon when item is added
- */
-function animateCartIcon() {
-    const cartIcon = document.querySelector('.fa-shopping-cart');
-    if (cartIcon) {
-        cartIcon.style.animation = 'none';
-        setTimeout(() => {
-            cartIcon.style.animation = 'cartBounce 0.5s ease';
-        }, 10);
     }
-}
 
-/**
- * Hero section parallax effect
- */
-window.addEventListener('scroll', function() {
-    const hero = document.querySelector('.hero-section');
-    if (hero) {
-        const scrolled = window.pageYOffset;
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        hero.style.opacity = 1 - (scrolled / 500);
-    }
-});
+    /* ===== TOUCH SCROLL HINT FOR CATEGORIES ===== */
+    function touchScrollHint() {
+        var track = document.getElementById('catTrack');
+        if (!track) return;
 
-/**
- * Add bounce animation to elements
- */
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes cartBounce {
-        0%, 100% { transform: scale(1); }
-        25% { transform: scale(1.3) rotate(10deg); }
-        50% { transform: scale(1.1) rotate(-10deg); }
-        75% { transform: scale(1.2) rotate(5deg); }
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            track.scrollLeft = 0;
+            setTimeout(function() {
+                track.scrollTo({ left: 60, behavior: 'smooth' });
+                setTimeout(function() {
+                    track.scrollTo({ left: 0, behavior: 'smooth' });
+                }, 600);
+            }, 1500);
         }
     }
-`;
-document.head.appendChild(style);
 
-/**
- * Show/Hide scroll to top button
- */
-window.addEventListener('scroll', function() {
-    const scrollTop = document.querySelector('.scroll-to-top');
-    if (scrollTop) {
-        if (window.pageYOffset > 300) {
-            scrollTop.style.display = 'flex';
-        } else {
-            scrollTop.style.display = 'none';
-        }
-    }
-});
-
-/**
- * Create and add scroll to top button
- */
-function createScrollToTopButton() {
-    const button = document.createElement('button');
-    button.className = 'scroll-to-top';
-    button.innerHTML = '<i class="fa fa-arrow-up"></i>';
-    button.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #FF6B35, #C41E3A);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        transition: all 0.3s ease;
-        z-index: 1000;
-    `;
-    
-    button.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1) translateY(-5px)';
-    });
-    
-    button.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1) translateY(0)';
-    });
-    
-    button.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    document.body.appendChild(button);
-}
-
-// Create scroll to top button
-createScrollToTopButton();
-
-/**
- * Format price with Sri Lankan Rupee symbol
- */
-function formatPrice(price) {
-    return `Rs. ${parseFloat(price).toLocaleString('en-LK', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    })}`;
-}
-
-/**
- * Image lazy loading fallback
- */
-document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('error', function() {
-        // Fallback to placeholder if image fails to load
-        this.src = 'images/placeholder.jpg';
-    });
-});
-
-/**
- * Add loading skeleton for better UX
- */
-function showLoadingSkeleton(container) {
-    container.innerHTML = `
-        <div class="loading">Loading delicious items</div>
-    `;
-}
-
-/**
- * Console greeting
- */
-console.log('%c🍛 Welcome to ZestyZoomer! 🍛', 'color: #FF6B35; font-size: 20px; font-weight: bold;');
-console.log('%cEnjoy authentic Sri Lankan flavors delivered to your door!', 'color: #006B3F; font-size: 14px;');
+})();

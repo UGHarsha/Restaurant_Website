@@ -18,34 +18,58 @@ if(isset($_SESSION['admin_id'])){
 
 if(isset($_POST['submit'])){
 
-   $login_type = $_POST['login_type'];
-   $email_or_name = $_POST['email_or_name'];
-   $email_or_name = filter_var($email_or_name, FILTER_SANITIZE_STRING);
-   $pass = sha1($_POST['pass']);
-   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+   $login_identifier = trim(filter_var($_POST['email_or_name'] ?? '', FILTER_SANITIZE_EMAIL));
+   $pass = $_POST['pass'] ?? '';
 
-   if($login_type == 'user'){
-      $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
-      $select_user->execute([$email_or_name, $pass]);
-      $row = $select_user->fetch(PDO::FETCH_ASSOC);
+   $error_field = ''; // tracks which field has the error
 
-      if($select_user->rowCount() > 0){
-         $_SESSION['user_id'] = $row['id'];
-         header('location:index.php');
-      }else{
-         $message[] = 'incorrect username or password!';
-      }
-   }elseif($login_type == 'admin'){
-      $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ? AND password = ?");
-      $select_admin->execute([$email_or_name, $pass]);
+   if(!empty($login_identifier) && !empty($pass)){
+     
+      $found_user = false;
+
+      // Try admin login first
+      $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
+      $select_admin->execute([$login_identifier]);
 
       if($select_admin->rowCount() > 0){
          $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
-         $_SESSION['admin_id'] = $fetch_admin_id['id'];
-         header('location:admin/products.php'); // Adjusted path
-      }else{
-         $message[] = 'incorrect username or password!';
+         $found_user = true;
+         if(password_verify($pass, $fetch_admin_id['password'])){
+            $_SESSION['admin_id'] = $fetch_admin_id['id'];
+            session_regenerate_id(true);
+            header('location:admin/products.php');
+            exit;
+         } else {
+            $message[] = 'Incorrect password. Please try again.';
+            $error_field = 'password';
+         }
       }
+
+      // Fall back to customer login
+      if(!$found_user){
+         $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+         $select_user->execute([$login_identifier]);
+         if($select_user->rowCount() > 0){
+            $row = $select_user->fetch(PDO::FETCH_ASSOC);
+            $found_user = true;
+            if(password_verify($pass, $row['password'])){
+               $_SESSION['user_id'] = $row['id'];
+               session_regenerate_id(true);
+               header('location:index.php');
+               exit;
+            } else {
+               $message[] = 'Incorrect password. Please try again.';
+               $error_field = 'password';
+            }
+         }
+      }
+
+      if(!$found_user){
+         $message[] = 'No account found with this email address.';
+         $error_field = 'email';
+      }
+   } else {
+      $message[] = 'Please fill in all fields.';
    }
 }
 ?>
@@ -70,9 +94,12 @@ if(isset($_POST['submit'])){
 <?php
 if(isset($message)){
    foreach($message as $msg){
+      $icon = 'fa-circle-exclamation';
+      if(isset($error_field) && $error_field === 'email') $icon = 'fa-envelope';
+      if(isset($error_field) && $error_field === 'password') $icon = 'fa-lock';
       echo '
       <div class="message">
-         <span>'.$msg.'</span>
+         <span><i class="fas '.$icon.'"></i> '.$msg.'</span>
          <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
       </div>
       ';
@@ -83,27 +110,22 @@ if(isset($message)){
 <div class="login-container">
    <div class="login-header">
       <h3>Welcome Back</h3>
-      <p>Sign in to continue your culinary journey</p>
+      <p>Sign in with your email and password to continue.</p>
    </div>
 
    <form action="" method="post" class="login-form">
-      <div class="form-group">
-         <i class="fas fa-user-cog"></i>
-         <select name="login_type" required>
-            <option value="" disabled selected>Select Login Type</option>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-         </select>
+      <div class="form-group form-group--email <?= (isset($error_field) && $error_field === 'email') ? 'form-group--error' : '' ?>">
+         <input type="email" name="email_or_name" required placeholder="Enter your email" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')" value="<?= htmlspecialchars($login_identifier ?? ''); ?>">
+         <?php if(isset($error_field) && $error_field === 'email'): ?>
+            <span class="field-error"><i class="fas fa-exclamation-circle"></i> No account found with this email</span>
+         <?php endif; ?>
       </div>
 
-      <div class="form-group">
-         <i class="fas fa-envelope"></i>
-         <input type="text" name="email_or_name" required placeholder="Enter your email or username" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-      </div>
-
-      <div class="form-group">
-         <i class="fas fa-lock"></i>
+      <div class="form-group form-group--password <?= (isset($error_field) && $error_field === 'password') ? 'form-group--error' : '' ?>">
          <input type="password" name="pass" required placeholder="Enter your password" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+         <?php if(isset($error_field) && $error_field === 'password'): ?>
+            <span class="field-error"><i class="fas fa-exclamation-circle"></i> Password is incorrect</span>
+         <?php endif; ?>
       </div>
 
       <button type="submit" name="submit" class="login-btn">
@@ -113,9 +135,10 @@ if(isset($message)){
 
    <div class="login-footer">
       <p>New to our restaurant? <a href="register.php">Join our family</a></p>
+      
    </div>
 </div>
-<!-- custom js file link  -->
+<!--  js file link  -->
 <script src="js/script.js"></script>
 
 </body>
