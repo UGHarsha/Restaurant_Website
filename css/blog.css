@@ -39,11 +39,15 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+<<<<<<< HEAD
 /* ── 992px ───────────────────────────────────────────────── */
+=======
+>>>>>>> 3eedf48b0c91f52b1475966a9bf6a3bdac83d9ea
 @media (max-width: 992px) {
   .blog-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+<<<<<<< HEAD
   .blog-hero__title {
     font-size: 1.9rem;
   }
@@ -66,10 +70,15 @@
 }
 
 /* ── 576px ───────────────────────────────────────────────── */
+=======
+}
+
+>>>>>>> 3eedf48b0c91f52b1475966a9bf6a3bdac83d9ea
 @media (max-width: 576px) {
   .blog-grid {
     grid-template-columns: 1fr;
   }
+<<<<<<< HEAD
   .blog-hero {
     padding: 1.8rem 0;
   }
@@ -98,6 +107,8 @@
   .post-title {
     font-size: 1rem;
   }
+=======
+>>>>>>> 3eedf48b0c91f52b1475966a9bf6a3bdac83d9ea
 }
 
 /* Post card styling */

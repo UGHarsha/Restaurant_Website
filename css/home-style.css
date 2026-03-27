@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿
 /* ===== VARIABLES ===== */
+=======
+
+>>>>>>> 3eedf48b0c91f52b1475966a9bf6a3bdac83d9ea
 :root {
     --zz-amber: #F59E0B;
     --zz-amber-dark: #D97706;
@@ -33,9 +37,25 @@
     padding: 0 16px;
 }
 
+<<<<<<< HEAD
 /* PILL TAG */
 .zz-pill {
     display: inline-flex;
+=======
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-cream);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    min-height: 600px;
+    display: flex;
+>>>>>>> 3eedf48b0c91f52b1475966a9bf6a3bdac83d9ea
     align-items: center;
     gap: 6px;
     font-size: 0.78rem;
