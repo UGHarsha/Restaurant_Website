@@ -8,8 +8,9 @@ if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
 }else{
    $user_id = '';
-  header('location:index.php');
-};
+   header('location:index.php');
+   exit;
+}
 // fetch current user details
 $select_user = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
 $select_user->execute([$user_id]);
@@ -17,10 +18,10 @@ $fetch_user = $select_user->fetch(PDO::FETCH_ASSOC);
 
 // handle profile update
 if(isset($_POST['update_profile'])){
-  $name = filter_var($_POST['name'] ?? '', FILTER_SANITIZE_STRING);
-  $email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
-  $number = filter_var($_POST['number'] ?? '', FILTER_SANITIZE_STRING);
-  $address = filter_var($_POST['address'] ?? '', FILTER_SANITIZE_STRING);
+  $name = htmlspecialchars(trim($_POST['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+  $email = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
+  $number = htmlspecialchars(trim($_POST['number'] ?? ''), ENT_QUOTES, 'UTF-8');
+  $address = htmlspecialchars(trim($_POST['address'] ?? ''), ENT_QUOTES, 'UTF-8');
 
   // ensure email/number uniqueness (excluding current user)
   $check_unique = $conn->prepare("SELECT id FROM `users` WHERE (email = ? OR number = ?) AND id != ?");
@@ -39,28 +40,28 @@ if(isset($_POST['update_profile'])){
 
 // handle password change
 if(isset($_POST['update_password'])){
-  $empty_hash = 'da39a3ee5e6b4b0d3255bfef95601890afd80709'; // sha1('')
-  $old_pass = sha1($_POST['old_pass'] ?? '');
-  $new_pass = sha1($_POST['new_pass'] ?? '');
-  $confirm_pass = sha1($_POST['confirm_pass'] ?? '');
+  $old_pass = $_POST['old_pass'] ?? '';
+  $new_pass = $_POST['new_pass'] ?? '';
+  $confirm_pass = $_POST['confirm_pass'] ?? '';
 
   // fetch current password
   $cur = $conn->prepare("SELECT password FROM `users` WHERE id = ?");
   $cur->execute([$user_id]);
   $prev = $cur->fetch(PDO::FETCH_ASSOC);
-  $prev_pass = $prev ? $prev['password'] : '';
+  $prev_hash = $prev ? $prev['password'] : '';
 
-  if($old_pass == $empty_hash){
+  if(empty($old_pass)){
     $message[] = 'Please enter your current password!';
-  }elseif($old_pass != $prev_pass){
+  }elseif(!password_verify($old_pass, $prev_hash)){
     $message[] = 'Old password does not match!';
-  }elseif($new_pass == $empty_hash){
+  }elseif(empty($new_pass)){
     $message[] = 'Please enter a new password!';
   }elseif($new_pass != $confirm_pass){
     $message[] = 'Confirm password not matched!';
   }else{
+    $new_hash = password_hash($new_pass, PASSWORD_DEFAULT);
     $upd = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
-    $upd->execute([$confirm_pass, $user_id]);
+    $upd->execute([$new_hash, $user_id]);
     $message[] = 'Password updated successfully!';
   }
 }
@@ -72,15 +73,12 @@ if(isset($_POST['update_password'])){
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Update Profile - ZestyZoomer</title>
+  <title>Update Profile - CeylonBites</title>
   <link rel="icon" href="images/logo.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
   <link href="css/navbar.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/home-style.css" rel="stylesheet">
   <link href="css/profile.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="profile-edit-page">
 <?php include 'user_header.php'; ?>

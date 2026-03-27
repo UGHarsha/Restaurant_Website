@@ -17,23 +17,21 @@ if ($user_id !== '') {
 $fetch_profile = null;
 ?>
 
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
+
 <header class="main-header">
     <div class="header-container">
         <div class="logo-section">
             <a href="index.php" class="brand-logo">
                 <i class="fa fa-cutlery"></i>
-                <span class="brand-name"><span class="brand-zesty">Zesty</span><span class="brand-zoomer">Zoomer</span></span>
+                <span class="brand-name"><span class="brand-ceylon">Ceylon</span><span class="brand-bites">Bites</span></span>
             </a>
         </div>
 
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="hamburger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </label>
-
-        <nav class="main-nav">
+        <nav class="main-nav" id="main-nav">
             <ul class="nav-menu">
                 <li class="nav-item"><a href="index.php" class="nav-link"><i class="fa fa-home"></i> Home</a></li>
                 <li class="nav-item"><a href="about us.php" class="nav-link"><i class="fa fa-info-circle"></i> About</a></li>
@@ -59,6 +57,11 @@ $fetch_profile = null;
             </a>
             <button type="button" class="action-btn user-btn" id="user-btn">
                 <i class="fa fa-user"></i>
+            </button>
+            <button type="button" class="hamburger-menu" id="hamburger-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
     </div>
@@ -115,11 +118,10 @@ $fetch_profile = null;
     // User dropdown toggle
     document.getElementById('user-btn').addEventListener('click', function(e) {
         e.stopPropagation();
-        var dropdown = document.getElementById('userDropdown');
-        dropdown.classList.toggle('active');
+        document.getElementById('userDropdown').classList.toggle('active');
     });
 
-    // Close dropdown when clicking outside
+    // Close user dropdown when clicking outside
     document.addEventListener('click', function(e) {
         var dropdown = document.getElementById('userDropdown');
         var userBtn = document.getElementById('user-btn');
@@ -128,8 +130,48 @@ $fetch_profile = null;
         }
     });
 
-    // Mobile menu toggle
-    document.getElementById('menu-toggle').addEventListener('change', function() {
-        document.querySelector('.main-nav').classList.toggle('active');
+    // Hamburger menu toggle
+    document.getElementById('hamburger-btn').addEventListener('click', function() {
+        var nav = document.getElementById('main-nav');
+        nav.classList.toggle('active');
+        this.classList.toggle('open');
+    });
+
+    // Mobile dropdown toggle — tap on dropdown-toggle opens/closes sub-menu
+    document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+            // Only intercept on mobile (hamburger is visible)
+            if (window.getComputedStyle(document.getElementById('hamburger-btn')).display !== 'none') {
+                e.preventDefault();
+                var parent = this.closest('.dropdown');
+                // Close all other open dropdowns first
+                document.querySelectorAll('.dropdown.active').forEach(function(d) {
+                    if (d !== parent) d.classList.remove('active');
+                });
+                parent.classList.toggle('active');
+            }
+        });
+    });
+
+    // Close nav when a non-dropdown link is clicked (mobile UX)
+    document.querySelectorAll('.nav-link:not(.dropdown-toggle)').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('main-nav').classList.remove('active');
+            document.getElementById('hamburger-btn').classList.remove('open');
+            document.querySelectorAll('.dropdown.active').forEach(function(d) {
+                d.classList.remove('active');
+            });
+        });
+    });
+
+    // Close dropdown sub-items also close the nav
+    document.querySelectorAll('.dropdown-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('main-nav').classList.remove('active');
+            document.getElementById('hamburger-btn').classList.remove('open');
+            document.querySelectorAll('.dropdown.active').forEach(function(d) {
+                d.classList.remove('active');
+            });
+        });
     });
 </script>

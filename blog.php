@@ -4,12 +4,11 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Blog - ZestyZoomer</title>
+	<title>Blog - CeylonBites</title>
 	<link rel="icon" href="images/logo.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<link href="css/bootstrap-4.4.1.css" rel="stylesheet">
 	<link href="css/navbar.css" rel="stylesheet">
-	<link href="css/home-style.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 	<link href="css/pages-style.css" rel="stylesheet">
 	<link href="css/blog.css" rel="stylesheet">
 </head>
@@ -204,5 +203,4 @@
 	<?php include 'user_footer.php'; ?>
 	
 </body>
-</html>
 </html>

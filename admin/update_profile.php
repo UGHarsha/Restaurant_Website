@@ -1,6 +1,6 @@
 <?php
 
-include '../components/connect.php';
+include '../connect.php';
 
 session_start();
 
@@ -8,49 +8,46 @@ $admin_id = $_SESSION['admin_id'];
 
 if(!isset($admin_id)){
    header('location:admin_login.php');
+   exit;
 }
 
 if(isset($_POST['submit'])){
 
-   $name = $_POST['name'];
-   $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
 
    if(!empty($name)){
-      $select_name = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
-      $select_name->execute([$name]);
+      $select_name = $conn->prepare("SELECT * FROM `admin` WHERE name = ? AND id != ?");
+      $select_name->execute([$name, $admin_id]);
       if($select_name->rowCount() > 0){
          $message[] = 'username already taken!';
       }else{
          $update_name = $conn->prepare("UPDATE `admin` SET name = ? WHERE id = ?");
          $update_name->execute([$name, $admin_id]);
+         $message[] = 'username updated!';
       }
    }
 
-   $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-   $select_old_pass = $conn->prepare("SELECT password FROM `admin` WHERE id = ?");
-   $select_old_pass->execute([$admin_id]);
-   $fetch_prev_pass = $select_old_pass->fetch(PDO::FETCH_ASSOC);
-   $prev_pass = $fetch_prev_pass['password'];
-   $old_pass = sha1($_POST['old_pass']);
-   $old_pass = filter_var($old_pass, FILTER_SANITIZE_STRING);
-   $new_pass = sha1($_POST['new_pass']);
-   $new_pass = filter_var($new_pass, FILTER_SANITIZE_STRING);
-   $confirm_pass = sha1($_POST['confirm_pass']);
-   $confirm_pass = filter_var($confirm_pass, FILTER_SANITIZE_STRING);
+   $old_pass = $_POST['old_pass'];
+   $new_pass = $_POST['new_pass'];
+   $confirm_pass = $_POST['confirm_pass'];
 
-   if($old_pass != $empty_pass){
-      if($old_pass != $prev_pass){
+   if(!empty($old_pass)){
+      $select_old_pass = $conn->prepare("SELECT password FROM `admin` WHERE id = ?");
+      $select_old_pass->execute([$admin_id]);
+      $fetch_prev_pass = $select_old_pass->fetch(PDO::FETCH_ASSOC);
+      $prev_hash = $fetch_prev_pass['password'];
+
+      if(!password_verify($old_pass, $prev_hash)){
          $message[] = 'old password not matched!';
+      }elseif(empty($new_pass)){
+         $message[] = 'please enter a new password!';
       }elseif($new_pass != $confirm_pass){
          $message[] = 'confirm password not matched!';
       }else{
-         if($new_pass != $empty_pass){
-            $update_pass = $conn->prepare("UPDATE `admin` SET password = ? WHERE id = ?");
-            $update_pass->execute([$confirm_pass, $admin_id]);
-            $message[] = 'password updated successfully!';
-         }else{
-            $message[] = 'please enter a new password!';
-         }
+         $new_hash = password_hash($new_pass, PASSWORD_DEFAULT);
+         $update_pass = $conn->prepare("UPDATE `admin` SET password = ? WHERE id = ?");
+         $update_pass->execute([$new_hash, $admin_id]);
+         $message[] = 'password updated successfully!';
       }
    }
 
@@ -75,7 +72,7 @@ if(isset($_POST['submit'])){
 </head>
 <body>
 
-<?php include '../components/admin_header.php' ?>
+<?php include 'admin_header.php' ?>
 
 <!-- admin profile update section starts  -->
 
@@ -83,7 +80,7 @@ if(isset($_POST['submit'])){
 
    <form action="" method="POST">
       <h3>update profile</h3>
-      <input type="text" name="name" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')" placeholder="<?= $fetch_profile['name']; ?>">
+      <input type="text" name="name" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')" placeholder="<?= htmlspecialchars($fetch_profile['name']); ?>">
       <input type="password" name="old_pass" maxlength="20" placeholder="enter your old password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="new_pass" maxlength="20" placeholder="enter your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
       <input type="password" name="confirm_pass" maxlength="20" placeholder="confirm your new password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
@@ -93,14 +90,6 @@ if(isset($_POST['submit'])){
 </section>
 
 <!-- admin profile update section ends -->
-
-
-
-
-
-
-
-
 
 <!-- custom js file link  -->
 <script src="../js/admin_script.js"></script>

@@ -8,20 +8,15 @@ if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
 }else{
    $user_id = '';
-};
+}
 
 if(isset($_POST['submit'])){
 
-   $name = $_POST['name'];
-   $name = filter_var($name, FILTER_SANITIZE_STRING);
-   $email = $_POST['email'];
-   $email = filter_var($email, FILTER_SANITIZE_STRING);
-   $number = $_POST['number'];
-   $number = filter_var($number, FILTER_SANITIZE_STRING);
-   $pass = sha1($_POST['pass']);
-   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-   $cpass = sha1($_POST['cpass']);
-   $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
+   $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
+   $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+   $number = htmlspecialchars(trim($_POST['number']), ENT_QUOTES, 'UTF-8');
+   $pass = $_POST['pass'];
+   $cpass = $_POST['cpass'];
 
    $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? OR number = ?");
    $select_user->execute([$email, $number]);
@@ -33,14 +28,17 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'confirm password not matched!';
       }else{
+         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
          $insert_user = $conn->prepare("INSERT INTO `users`(name, email, number, password) VALUES(?,?,?,?)");
-         $insert_user->execute([$name, $email, $number, $cpass]);
-         $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ?");
-         $select_user->execute([$email, $pass]);
+         $insert_user->execute([$name, $email, $number, $hashed_pass]);
+         $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+         $select_user->execute([$email]);
          $row = $select_user->fetch(PDO::FETCH_ASSOC);
          if($select_user->rowCount() > 0){
             $_SESSION['user_id'] = $row['id'];
+            session_regenerate_id(true);
             header('location:index.php');
+            exit;
          }
       }
    }

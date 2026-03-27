@@ -189,6 +189,55 @@ body {
     justify-content: space-between;
     min-width: 300px;
     backdrop-filter: blur(10px);
+    animation: msgSlideDown 0.4s ease-out;
+}
+
+.message span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.message span i:first-child {
+    font-size: 16px;
+    color: #f87171;
+}
+
+@keyframes msgSlideDown {
+    from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Field-level error */
+.form-group--error input {
+    border-color: #ef4444 !important;
+    background: rgba(239, 68, 68, 0.06) !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    animation: inputShake 0.4s ease;
+}
+
+@keyframes inputShake {
+    0%, 100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(5px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(3px); }
+}
+
+.field-error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #f87171;
+    font-weight: 500;
+    animation: fadeInUp 0.3s ease;
+}
+
+.field-error i {
+    font-size: 13px;
+    color: #ef4444;
 }
 
 .message.success {
@@ -210,12 +259,50 @@ body {
 /* Responsive Design */
 @media (max-width: 480px) {
     .login-container {
-        padding: 30px 20px;
-        margin: 20px 10px;
+        padding: 25px 16px;
+        margin: 15px 8px;
+        border-radius: 16px;
     }
     
     .login-header h3 {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    .login-header p {
+        font-size: 14px;
+    }
+
+    .login-form input {
+        padding: 13px 13px 13px 42px;
+        font-size: 15px;
+    }
+
+    .login-btn {
+        padding: 13px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+    }
+
+    .login-container {
+        padding: 20px 14px;
+        margin: 10px 4px;
+    }
+
+    .login-header h3 {
+        font-size: 20px;
+    }
+
+    .message {
+        min-width: unset;
+        width: calc(100vw - 20px);
+        left: 10px;
+        transform: none;
+        font-size: 13px;
     }
 }
 

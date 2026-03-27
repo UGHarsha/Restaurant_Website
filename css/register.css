@@ -256,12 +256,51 @@ body {
     }
     
     .register-container {
-        padding: 30px 20px;
-        margin: 20px 10px;
+        padding: 25px 16px;
+        margin: 15px 8px;
+        border-radius: 16px;
     }
     
     .register-header h3 {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    .register-header p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        padding: 10px;
+    }
+
+    .register-container {
+        padding: 20px 14px;
+        margin: 10px 4px;
+    }
+
+    .register-header h3 {
+        font-size: 20px;
+    }
+
+    .message {
+        min-width: unset;
+        width: calc(100vw - 20px);
+        left: 10px;
+        transform: none;
+        font-size: 13px;
+    }
+
+    .progress-steps {
+        gap: 0;
+    }
+
+    .step {
+        width: 34px;
+        height: 34px;
+        margin: 0 6px;
+        font-size: 13px;
     }
 }
 

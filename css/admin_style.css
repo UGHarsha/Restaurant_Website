@@ -336,7 +336,7 @@ section{
 
 .show-products .box-container{
    display: grid;
-   grid-template-columns: repeat(auto-fit, 33rem);
+   grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
    gap:1.5rem;
    justify-content: center;
    align-items: flex-start;
@@ -424,7 +424,7 @@ section{
 
 .placed-orders .box-container{
    display: grid;
-   grid-template-columns: repeat(auto-fit, 33rem);
+   grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
    gap:1.5rem;
    justify-content: center;
    align-items: flex-start;
@@ -463,7 +463,7 @@ section{
 
 .accounts .box-container{
    display: grid;
-   grid-template-columns: repeat(auto-fit, 33rem);
+   grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
    gap:1.5rem;
    justify-content: center;
    align-items: flex-start;
@@ -491,7 +491,7 @@ section{
 
 .messages .box-container{
    display: grid;
-   grid-template-columns: repeat(auto-fit, 33rem);
+   grid-template-columns: repeat(auto-fit, minmax(28rem, 1fr));
    gap:1.5rem;
    justify-content: center;
    align-items: flex-start;
@@ -533,16 +533,20 @@ section{
 
 
 
-/* media queries  */
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — admin_style.css
+   ═══════════════════════════════════════════════ */
 
+/* ── 991px ── */
 @media (max-width:991px){
 
-   html{
-      font-size: 55%;
-   }
+   html{ font-size: 55%; }
+
+   section { padding: 1.5rem; }
 
 }
 
+/* ── 768px ── */
 @media (max-width:768px){
 
    #menu-btn{
@@ -568,32 +572,50 @@ section{
       margin:2rem;
    }
 
+   /* Reduce min-width so 2 cards still fit side-by-side */
+   .show-products .box-container,
+   .placed-orders .box-container,
+   .accounts .box-container,
+   .messages .box-container {
+      grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+   }
+
 }
 
+/* ── 576px ── */
+@media (max-width:576px){
+
+   html{ font-size: 52%; }
+
+   .show-products .box-container,
+   .placed-orders .box-container,
+   .accounts .box-container,
+   .messages .box-container {
+      grid-template-columns: 1fr;
+   }
+
+   .dashboard .box-container {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+   }
+
+}
+
+/* ── 450px ── */
 @media (max-width:450px){
 
-   html{
-      font-size: 50%;
-   }
+   html{ font-size: 50%; }
 
    .flex-btn{
       flex-flow: column;
       gap:0;
    }
 
-   .heading{
-      font-size: 3rem;
-   }
+   .heading{ font-size: 3rem; }
 
-   .show-products .box-container{
-      grid-template-columns: 1fr;
-   }
-
-   .placed-orders .box-container{
-      grid-template-columns: 1fr;
-   }
-
-   .accounts .box-container{
+   .show-products .box-container,
+   .placed-orders .box-container,
+   .accounts .box-container,
+   .messages .box-container {
       grid-template-columns: 1fr;
    }
 
