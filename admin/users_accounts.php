@@ -10,8 +10,8 @@ if(!isset($admin_id)){
    header('location:admin_login.php');
    exit;
 }
-if(isset($_POST['delete_user'])){
-   $delete_id = (int)$_POST['delete_id'];
+if(isset($_GET['delete'])){
+   $delete_id = $_GET['delete'];
    $delete_users = $conn->prepare("DELETE FROM `users` WHERE id = ?");
    $delete_users->execute([$delete_id]);
    $delete_order = $conn->prepare("DELETE FROM `orders` WHERE user_id = ?");
@@ -19,7 +19,6 @@ if(isset($_POST['delete_user'])){
    $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
    $delete_cart->execute([$delete_id]);
    header('location:users_accounts.php');
-   exit;
 }
 
 ?>
@@ -58,12 +57,9 @@ if(isset($_POST['delete_user'])){
          while($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)){  
    ?>
    <div class="box">
-      <p> user id : <span><?= htmlspecialchars($fetch_accounts['id']); ?></span> </p>
-      <p> username : <span><?= htmlspecialchars($fetch_accounts['name']); ?></span> </p>
-      <form action="" method="post" style="display:inline;">
-         <input type="hidden" name="delete_id" value="<?= $fetch_accounts['id']; ?>">
-         <button type="submit" name="delete_user" class="delete-btn" onclick="return confirm('delete this account?');">delete</button>
-      </form>
+      <p> user id : <span><?= $fetch_accounts['id']; ?></span> </p>
+      <p> username : <span><?= $fetch_accounts['name']; ?></span> </p>
+      <a href="users_accounts.php?delete=<?= $fetch_accounts['id']; ?>" class="delete-btn" onclick="return confirm('delete this account?');">delete</a>
    </div>
    <?php
       }

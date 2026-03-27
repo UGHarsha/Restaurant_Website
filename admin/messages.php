@@ -11,12 +11,11 @@ if(!isset($admin_id)){
    exit;
 }
 
-if(isset($_POST['delete_message'])){
-   $delete_id = (int)$_POST['delete_id'];
+if(isset($_GET['delete'])){
+   $delete_id = $_GET['delete'];
    $delete_message = $conn->prepare("DELETE FROM `messages` WHERE id = ?");
    $delete_message->execute([$delete_id]);
    header('location:messages.php');
-   exit;
 }
 
 ?>
@@ -55,14 +54,11 @@ if(isset($_POST['delete_message'])){
          while($fetch_messages = $select_messages->fetch(PDO::FETCH_ASSOC)){
    ?>
    <div class="box">
-      <p> name : <span><?= htmlspecialchars($fetch_messages['name']); ?></span> </p>
-      <p> number : <span><?= htmlspecialchars($fetch_messages['number']); ?></span> </p>
-      <p> email : <span><?= htmlspecialchars($fetch_messages['email']); ?></span> </p>
-      <p> message : <span><?= htmlspecialchars($fetch_messages['message']); ?></span> </p>
-      <form action="" method="post" style="display:inline;">
-         <input type="hidden" name="delete_id" value="<?= $fetch_messages['id']; ?>">
-         <button type="submit" name="delete_message" class="delete-btn" onclick="return confirm('delete this message?');">delete</button>
-      </form>
+      <p> name : <span><?= $fetch_messages['name']; ?></span> </p>
+      <p> number : <span><?= $fetch_messages['number']; ?></span> </p>
+      <p> email : <span><?= $fetch_messages['email']; ?></span> </p>
+      <p> message : <span><?= $fetch_messages['message']; ?></span> </p>
+      <a href="messages.php?delete=<?= $fetch_messages['id']; ?>" class="delete-btn" onclick="return confirm('delete this message?');">delete</a>
    </div>
    <?php
          }

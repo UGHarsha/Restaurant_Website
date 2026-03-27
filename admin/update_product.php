@@ -13,10 +13,14 @@ if(!isset($admin_id)){
 
 if(isset($_POST['update'])){
 
-   $pid = (int)$_POST['pid'];
-   $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
-   $price = (float)$_POST['price'];
-   $category = htmlspecialchars(trim($_POST['category']), ENT_QUOTES, 'UTF-8');
+   $pid = $_POST['pid'];
+   $pid = filter_var($pid, FILTER_SANITIZE_STRING);
+   $name = $_POST['name'];
+   $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $price = $_POST['price'];
+   $price = filter_var($price, FILTER_SANITIZE_STRING);
+   $category = $_POST['category'];
+   $category = filter_var($category, FILTER_SANITIZE_STRING);
 
    $update_product = $conn->prepare("UPDATE `products` SET name = ?, category = ?, price = ? WHERE id = ?");
    $update_product->execute([$name, $category, $price, $pid]);
@@ -25,24 +29,19 @@ if(isset($_POST['update'])){
 
    $old_image = $_POST['old_image'];
    $image = $_FILES['image']['name'];
+   $image = filter_var($image, FILTER_SANITIZE_STRING);
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
+   $image_folder = '../uploaded_img/'.$image;
 
    if(!empty($image)){
-      $image_ext = strtolower(pathinfo($image, PATHINFO_EXTENSION));
-      $allowed_ext = ['jpg', 'jpeg', 'png', 'webp'];
-      if(!in_array($image_ext, $allowed_ext)){
-         $message[] = 'invalid image type! Only jpg, jpeg, png, webp allowed.';
-      }elseif($image_size > 2000000){
+      if($image_size > 2000000){
          $message[] = 'images size is too large!';
       }else{
-         $safe_image = uniqid('prod_', true) . '.' . $image_ext;
-         $image_folder = '../uploaded_img/'.$safe_image;
          $update_image = $conn->prepare("UPDATE `products` SET image = ? WHERE id = ?");
-         $update_image->execute([$safe_image, $pid]);
+         $update_image->execute([$image, $pid]);
          move_uploaded_file($image_tmp_name, $image_folder);
-         $old_path = '../uploaded_img/'.$old_image;
-         if(file_exists($old_path)) unlink($old_path);
+         unlink('../uploaded_img/'.$old_image);
          $message[] = 'image updated!';
       }
    }
@@ -77,7 +76,7 @@ if(isset($_POST['update'])){
    <h1 class="heading">update product</h1>
 
    <?php
-      $update_id = isset($_GET['update']) ? (int)$_GET['update'] : 0;
+      $update_id = $_GET['update'];
       $show_products = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
       $show_products->execute([$update_id]);
       if($show_products->rowCount() > 0){
@@ -85,15 +84,15 @@ if(isset($_POST['update'])){
    ?>
    <form action="" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
-      <input type="hidden" name="old_image" value="<?= htmlspecialchars($fetch_products['image']); ?>">
-      <img src="../uploaded_img/<?= htmlspecialchars($fetch_products['image']); ?>" alt="">
+      <input type="hidden" name="old_image" value="<?= $fetch_products['image']; ?>">
+      <img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="">
       <span>update name</span>
-      <input type="text" required placeholder="enter product name" name="name" maxlength="100" class="box" value="<?= htmlspecialchars($fetch_products['name']); ?>">
+      <input type="text" required placeholder="enter product name" name="name" maxlength="100" class="box" value="<?= $fetch_products['name']; ?>">
       <span>update price</span>
-      <input type="number" min="0" max="9999999999" required placeholder="enter product price" name="price" onkeypress="if(this.value.length == 10) return false;" class="box" value="<?= htmlspecialchars($fetch_products['price']); ?>">
+      <input type="number" min="0" max="9999999999" required placeholder="enter product price" name="price" onkeypress="if(this.value.length == 10) return false;" class="box" value="<?= $fetch_products['price']; ?>">
       <span>update category</span>
       <select name="category" class="box" required>
-         <option selected value="<?= htmlspecialchars($fetch_products['category']); ?>"><?= htmlspecialchars($fetch_products['category']); ?></option>
+         <option selected value="<?= $fetch_products['category']; ?>"><?= $fetch_products['category']; ?></option>
          <option value="main">Main</option>
          <option value="desserts">Desserts</option>
          <option value="beverages">Beverages</option>

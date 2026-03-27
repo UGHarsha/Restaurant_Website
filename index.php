@@ -49,31 +49,6 @@ include 'add_cart.php';
                 </div>
             </div>
         </div>
-        <div class="zz-hero__right">
-            <div class="zz-hero__card-stack">
-                <div class="zz-hero__float-card zz-hero__float-card--1">
-                    <img src="images/Main/kottu.jpg" alt="Kottu">
-                    <div class="zz-hero__float-info">
-                        <span class="zz-hero__float-name">Kottu Roti</span>
-                        <span class="zz-hero__float-price">Rs. 850</span>
-                    </div>
-                </div>
-                <div class="zz-hero__float-card zz-hero__float-card--2">
-                    <img src="images/Main/hopper.jpg" alt="Hoppers">
-                    <div class="zz-hero__float-info">
-                        <span class="zz-hero__float-name">Egg Hoppers</span>
-                        <span class="zz-hero__float-price">Rs. 120</span>
-                    </div>
-                </div>
-                <div class="zz-hero__float-card zz-hero__float-card--3">
-                    <img src="images/Main/rice&curry.jpg" alt="Rice & Curry">
-                    <div class="zz-hero__float-info">
-                        <span class="zz-hero__float-name">Rice & Curry</span>
-                        <span class="zz-hero__float-price">Rs. 650</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="zz-hero__stats">
         <div class="zz-hero__stat">
