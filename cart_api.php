@@ -1,6 +1,4 @@
 <?php
-// Lightweight JSON API for cart actions (update quantity, delete item, clear cart)
-// Provides progressive enhancement for the cart without breaking existing form fallback
 
 header('Content-Type: application/json');
 
@@ -9,7 +7,7 @@ session_start();
 
 $response = [ 'ok' => false ];
 
-// Ensure user is authenticated
+//  user  authenticated
 if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     http_response_code(401);
     echo json_encode([ 'ok' => false, 'error' => 'unauthorized' ]);
@@ -18,7 +16,7 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Helper: compute grand total for current user
+//  compute grand total 
 function compute_grand_total(PDO $conn, $user_id) {
     $grand_total = 0;
     $stmt = $conn->prepare('SELECT price, quantity FROM `cart` WHERE user_id = ?');
@@ -40,7 +38,7 @@ try {
         $update = $conn->prepare('UPDATE `cart` SET quantity = ? WHERE id = ? AND user_id = ?');
         $update->execute([$qty, $cart_id, $user_id]);
 
-        // Fetch item to compute subtotal
+        // item to compute subtotal
         $item = $conn->prepare('SELECT price FROM `cart` WHERE id = ? AND user_id = ?');
         $item->execute([$cart_id, $user_id]);
         $price = 0;

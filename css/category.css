@@ -1,0 +1,424 @@
+﻿/* CATEGORY PAGE - category.css - Prefix: ctg- */
+
+/* ── HERO ── */
+.ctg-hero {
+    position: relative;
+    padding: 80px 20px 60px;
+    text-align: center;
+    background: #1A0F0A;
+    overflow: hidden;
+}
+.ctg-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(139,69,19,.92) 0%, rgba(26,15,10,.88) 50%, rgba(93,64,55,.92) 100%);
+}
+.ctg-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+    margin: 0 auto;
+}
+.ctg-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(245,158,11,.14);
+    border: 2px solid rgba(245,158,11,.35);
+    font-size: 1.5rem;
+    color: #F59E0B;
+    margin-bottom: 18px;
+}
+.ctg-hero-title {
+    color: #fff;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin: 0 0 10px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+.ctg-hero-sub {
+    color: rgba(255,255,255,.72);
+    font-size: 1.02rem;
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+.ctg-breadcrumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .85rem;
+}
+.ctg-breadcrumb a {
+    color: rgba(255,255,255,.55);
+    text-decoration: none;
+    transition: color .2s;
+}
+.ctg-breadcrumb a:hover {
+    color: #F59E0B;
+}
+.ctg-breadcrumb span {
+    color: #F59E0B;
+    font-weight: 600;
+}
+
+/* ── PRODUCTS SECTION ── */
+.ctg-products {
+    padding: 60px 20px 80px;
+    background: #FFF8E7;
+    min-height: 50vh;
+}
+.ctg-bar {
+    margin-bottom: 28px;
+}
+.ctg-bar-count {
+    font-size: .95rem;
+    color: #8d7b6e;
+}
+.ctg-bar-count strong {
+    color: #2C1810;
+    font-weight: 800;
+}
+.ctg-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.ctg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+/* ── CARD ── */
+.ctg-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    transition: transform .3s, box-shadow .3s;
+    display: flex;
+    flex-direction: column;
+}
+.ctg-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.1);
+}
+.ctg-card-img {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/2;
+    background: #f5f0eb;
+}
+.ctg-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s;
+}
+.ctg-card:hover .ctg-card-img img {
+    transform: scale(1.08);
+}
+.ctg-card-cat {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(245,158,11,.92);
+    color: #fff;
+    font-size: .65rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+/* ── CARD BODY ── */
+.ctg-card-body {
+    padding: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.ctg-card-name {
+    font-size: .95rem;
+    font-weight: 700;
+    color: #2C1810;
+    margin: 0 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ctg-card-desc {
+    font-size: .78rem;
+    color: #8d7b6e;
+    line-height: 1.4;
+    margin: 0 0 10px;
+}
+.ctg-desc-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ctg-see-more {
+    color: #D97706;
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color .2s;
+    white-space: nowrap;
+}
+.ctg-see-more:hover {
+    color: #8B4513;
+    text-decoration: underline;
+}
+
+/* ── CARD BOTTOM (PRICE + QTY + BUTTON) ── */
+.ctg-card-bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #f0ebe5;
+}
+.ctg-card-price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #F59E0B;
+    margin: 0;
+    white-space: nowrap;
+}
+.ctg-card-price small {
+    font-size: .65rem;
+    font-weight: 600;
+    color: #b89a6a;
+    margin-right: 1px;
+}
+.ctg-card-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.ctg-qty-group {
+    display: inline-flex;
+    align-items: center;
+    border: 1.5px solid #e8e0d8;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #faf7f3;
+}
+.ctg-qty-btn {
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: transparent;
+    font-size: .75rem;
+    font-weight: 700;
+    color: #8B4513;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, color .2s;
+}
+.ctg-qty-btn:hover {
+    background: #F59E0B;
+    color: #fff;
+}
+.ctg-qty-input {
+    width: 28px;
+    height: 26px;
+    text-align: center;
+    border: none;
+    border-left: 1.5px solid #e8e0d8;
+    border-right: 1.5px solid #e8e0d8;
+    background: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    color: #2C1810;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+.ctg-qty-input::-webkit-outer-spin-button,
+.ctg-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ── ADD TO CART BUTTON ── */
+.ctg-add-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: #fff;
+    font-size: .85rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+    padding: 0;
+}
+.ctg-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(245,158,11,.4);
+}
+
+/* ── EMPTY STATE ── */
+.ctg-empty {
+    text-align: center;
+    padding: 80px 20px;
+}
+.ctg-empty-icon {
+    font-size: 3.5rem;
+    color: #d4c9be;
+    margin-bottom: 18px;
+}
+.ctg-empty-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #5D4037;
+    margin: 0 0 8px;
+}
+.ctg-empty-text {
+    color: #8d7b6e;
+    font-size: .95rem;
+    margin: 0 0 24px;
+}
+.ctg-empty-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform .2s;
+}
+.ctg-empty-link:hover {
+    transform: translateY(-2px);
+}
+
+/* ── DESCRIPTION MODAL ── */
+.ctg-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s, visibility .25s;
+}
+.ctg-modal-overlay.ctg-modal-active {
+    opacity: 1;
+    visibility: visible;
+}
+.ctg-modal {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 24px 24px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,.2);
+    transform: translateY(20px) scale(.96);
+    transition: transform .25s;
+}
+.ctg-modal-active .ctg-modal {
+    transform: translateY(0) scale(1);
+}
+.ctg-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: #f5f0eb;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #5D4037;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+}
+.ctg-modal-close:hover {
+    background: #F59E0B;
+    color: #fff;
+}
+.ctg-modal-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #2C1810;
+    margin: 0 0 12px;
+    padding-right: 30px;
+}
+.ctg-modal-desc {
+    font-size: .92rem;
+    color: #5D4037;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 992px) {
+    .ctg-hero-title { font-size: 2.2rem; }
+    .ctg-grid { gap: 18px; }
+}
+@media (max-width: 768px) {
+    .ctg-hero { padding: 60px 16px 45px; }
+    .ctg-hero-title { font-size: 1.8rem; }
+    .ctg-hero-badge { width: 56px; height: 56px; font-size: 1.2rem; }
+    .ctg-hero-sub { font-size: .9rem; }
+    .ctg-products { padding: 40px 16px 60px; }
+    .ctg-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+}
+@media (max-width: 576px) {
+    .ctg-hero { padding: 50px 14px 35px; }
+    .ctg-hero-title { font-size: 1.4rem; }
+    .ctg-hero-badge { width: 48px; height: 48px; font-size: 1rem; margin-bottom: 12px; }
+    .ctg-hero-sub { font-size: .82rem; margin-bottom: 14px; }
+    .ctg-breadcrumb { font-size: .75rem; gap: 6px; }
+    .ctg-products { padding: 30px 10px 50px; }
+    .ctg-bar { margin-bottom: 16px; }
+    .ctg-bar-count { font-size: .82rem; }
+    .ctg-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ctg-card { border-radius: 10px; }
+    .ctg-card-cat { font-size: .58rem; padding: 2px 6px; top: 6px; left: 6px; }
+    .ctg-card-body { padding: 10px; }
+    .ctg-card-name { font-size: .82rem; margin-bottom: 2px; }
+    .ctg-card-desc { font-size: .7rem; margin-bottom: 6px; }
+    .ctg-card-bottom { gap: 6px; padding-top: 8px; }
+    .ctg-card-price { font-size: .88rem; }
+    .ctg-card-price small { font-size: .58rem; }
+    .ctg-qty-btn { width: 22px; height: 22px; font-size: .65rem; }
+    .ctg-qty-input { width: 24px; height: 22px; font-size: .72rem; }
+    .ctg-add-btn { width: 28px; height: 28px; min-width: 28px; font-size: .75rem; border-radius: 6px; }
+    .ctg-modal { padding: 22px 18px 18px; border-radius: 12px; }
+    .ctg-modal-title { font-size: .95rem; }
+    .ctg-modal-desc { font-size: .85rem; }
+}
+@media (max-width: 400px) {
+    .ctg-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ctg-card-body { padding: 8px; }
+    .ctg-card-name { font-size: .78rem; }
+    .ctg-card-desc { display: none; }
+    .ctg-card-price { font-size: .82rem; }
+}
