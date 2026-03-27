@@ -21,56 +21,37 @@ if(isset($_POST['submit'])){
    $login_identifier = trim(filter_var($_POST['email_or_name'] ?? '', FILTER_SANITIZE_EMAIL));
    $pass = $_POST['pass'] ?? '';
 
-   $error_field = ''; // tracks which field has the error
-
    if(!empty($login_identifier) && !empty($pass)){
      
-      $found_user = false;
-
       // Try admin login first
       $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
       $select_admin->execute([$login_identifier]);
 
       if($select_admin->rowCount() > 0){
          $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
-         $found_user = true;
          if(password_verify($pass, $fetch_admin_id['password'])){
             $_SESSION['admin_id'] = $fetch_admin_id['id'];
             session_regenerate_id(true);
             header('location:admin/products.php');
             exit;
-         } else {
-            $message[] = 'Incorrect password. Please try again.';
-            $error_field = 'password';
          }
       }
 
       // Fall back to customer login
-      if(!$found_user){
-         $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
-         $select_user->execute([$login_identifier]);
-         if($select_user->rowCount() > 0){
-            $row = $select_user->fetch(PDO::FETCH_ASSOC);
-            $found_user = true;
-            if(password_verify($pass, $row['password'])){
-               $_SESSION['user_id'] = $row['id'];
-               session_regenerate_id(true);
-               header('location:index.php');
-               exit;
-            } else {
-               $message[] = 'Incorrect password. Please try again.';
-               $error_field = 'password';
-            }
+      $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+      $select_user->execute([$login_identifier]);
+      if($select_user->rowCount() > 0){
+         $row = $select_user->fetch(PDO::FETCH_ASSOC);
+         if(password_verify($pass, $row['password'])){
+            $_SESSION['user_id'] = $row['id'];
+            session_regenerate_id(true);
+            header('location:index.php');
+            exit;
          }
       }
-
-      if(!$found_user){
-         $message[] = 'No account found with this email address.';
-         $error_field = 'email';
-      }
-   } else {
-      $message[] = 'Please fill in all fields.';
    }
+
+   $message[] = 'Incorrect email or password!';
 }
 ?>
 
@@ -94,12 +75,9 @@ if(isset($_POST['submit'])){
 <?php
 if(isset($message)){
    foreach($message as $msg){
-      $icon = 'fa-circle-exclamation';
-      if(isset($error_field) && $error_field === 'email') $icon = 'fa-envelope';
-      if(isset($error_field) && $error_field === 'password') $icon = 'fa-lock';
       echo '
       <div class="message">
-         <span><i class="fas '.$icon.'"></i> '.$msg.'</span>
+         <span>'.$msg.'</span>
          <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
       </div>
       ';
@@ -114,18 +92,12 @@ if(isset($message)){
    </div>
 
    <form action="" method="post" class="login-form">
-      <div class="form-group form-group--email <?= (isset($error_field) && $error_field === 'email') ? 'form-group--error' : '' ?>">
-         <input type="email" name="email_or_name" required placeholder="Enter your email" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')" value="<?= htmlspecialchars($login_identifier ?? ''); ?>">
-         <?php if(isset($error_field) && $error_field === 'email'): ?>
-            <span class="field-error"><i class="fas fa-exclamation-circle"></i> No account found with this email</span>
-         <?php endif; ?>
+      <div class="form-group form-group--email">
+         <input type="email" name="email_or_name" required placeholder="Enter your email" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
       </div>
 
-      <div class="form-group form-group--password <?= (isset($error_field) && $error_field === 'password') ? 'form-group--error' : '' ?>">
+      <div class="form-group form-group--password">
          <input type="password" name="pass" required placeholder="Enter your password" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-         <?php if(isset($error_field) && $error_field === 'password'): ?>
-            <span class="field-error"><i class="fas fa-exclamation-circle"></i> Password is incorrect</span>
-         <?php endif; ?>
       </div>
 
       <button type="submit" name="submit" class="login-btn">

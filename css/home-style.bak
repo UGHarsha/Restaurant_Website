@@ -1,4 +1,4 @@
-
+﻿
 /* ===== VARIABLES ===== */
 :root {
     --zz-amber: #F59E0B;
@@ -248,6 +248,10 @@
     flex: 1;
     min-width: 0;
 }
+.zz-hero__right {
+    display: none;
+}
+
 /* Badge */
 .zz-hero__badge {
     display: inline-flex;
@@ -342,6 +346,79 @@
 .zz-hero__trust-text strong {
     color: #fff;
     font-weight: 700;
+}
+
+/* Floating food cards */
+.zz-hero__card-stack {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    height: 420px;
+    margin: 0 auto;
+}
+.zz-hero__float-card {
+    position: absolute;
+    border-radius: var(--zz-r);
+    overflow: hidden;
+    background: var(--zz-glass);
+    border: 1px solid var(--zz-glass-border);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    transition: transform 0.5s var(--zz-spring);
+}
+.zz-hero__float-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+}
+.zz-hero__float-info {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.zz-hero__float-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #fff;
+}
+.zz-hero__float-price {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--zz-amber);
+}
+.zz-hero__float-card--1 {
+    width: 220px;
+    top: 0;
+    right: 20px;
+    z-index: 3;
+    animation: floatCard1 6s ease-in-out infinite;
+}
+.zz-hero__float-card--2 {
+    width: 200px;
+    top: 100px;
+    left: 0;
+    z-index: 2;
+    animation: floatCard2 7s ease-in-out infinite;
+}
+.zz-hero__float-card--3 {
+    width: 210px;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    animation: floatCard3 8s ease-in-out infinite;
+}
+@keyframes floatCard1 {
+    0%, 100% { transform: translateY(0) rotate(2deg); }
+    50% { transform: translateY(-12px) rotate(0deg); }
+}
+@keyframes floatCard2 {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(10px) rotate(-1deg); }
+}
+@keyframes floatCard3 {
+    0%, 100% { transform: translateY(0) rotate(1deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
 }
 
 /* Hero Stats Bar */
@@ -1032,6 +1109,7 @@
         gap: 60px;
     }
     .zz-hero__title { font-size: 3.8rem; }
+    .zz-hero__right { display: block; flex: 0 0 400px; }
     .zz-hero__stats {
         padding: 0 32px;
         margin-top: 40px;
@@ -1071,7 +1149,13 @@
    ====================================================== */
 @media (min-width: 1280px) {
     .zz-hero__title { font-size: 4.2rem; }
-    }
+    .zz-hero__right { flex: 0 0 440px; }
+    .zz-hero__float-card--1 { width: 240px; }
+    .zz-hero__float-card--2 { width: 220px; }
+    .zz-hero__float-card--3 { width: 230px; }
+    .zz-hero__card-stack { max-width: 440px; height: 460px; }
+    .zz-hero__float-card img { height: 160px; }
+}
 
 /* Mobile cart btn always visible */
 @media (max-width: 767px) {
@@ -1094,5 +1178,3 @@
     .zz-cats__card { width: 220px; }
     .zz-pcard__visual { height: 130px; }
 }
-
-

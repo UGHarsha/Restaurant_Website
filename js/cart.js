@@ -5,9 +5,10 @@
   const apiUrl = 'cart_api.php';
 
   const fmt = (value) => {
+    // Format currency: Rs.<amount>
     try {
-      const num = Number(String(value).replace(/,/g, '')) || 0;
-      return `Rs.${num.toLocaleString()}`;
+      const num = Number(value) || 0;
+      return `Rs.${num}`;
     } catch (e) {
       return `Rs.${value}`;
     }
@@ -16,8 +17,6 @@
   const updateGrandTotalUI = (grand) => {
     const gt = document.getElementById('grand-total');
     if (gt) gt.textContent = fmt(grand);
-    const gtMain = document.getElementById('grand-total-main');
-    if (gtMain) gtMain.textContent = fmt(grand);
     const summary = document.getElementById('cart-summary');
     if (summary) {
       if ((Number(grand) || 0) <= 0) {
@@ -30,35 +29,16 @@
 
   const updateSubtotalUI = (cartId, subtotal) => {
     const el = document.getElementById(`subtotal-${cartId}`);
-    if (el) {
-      const label = el.querySelector('.crt-card__subtotal-label');
-      const labelHTML = label ? label.outerHTML : '';
-      el.innerHTML = labelHTML + '\n' + fmt(subtotal);
-    }
+    if (el) el.textContent = fmt(subtotal);
   };
 
   const removeItemUI = (cartId) => {
     const item = document.getElementById(`item-${cartId}`);
-    if (item) {
-      item.style.transition = 'all 0.4s cubic-bezier(.22,.61,.36,1)';
-      item.style.opacity = '0';
-      item.style.transform = 'translateX(-30px) scale(0.95)';
-      item.style.maxHeight = item.offsetHeight + 'px';
-      setTimeout(() => {
-        item.style.maxHeight = '0';
-        item.style.marginBottom = '0';
-        item.style.padding = '0';
-        item.style.overflow = 'hidden';
-      }, 200);
-      setTimeout(() => {
-        item.parentNode.removeChild(item);
-        // If no items remain, show empty state
-        const itemsContainer = document.querySelector('.cart-items');
-        if (itemsContainer && itemsContainer.children.length === 0) {
-          // Reload to show empty cart state
-          window.location.reload();
-        }
-      }, 500);
+    if (item) item.parentNode.removeChild(item);
+    // If no items remain, show empty state
+    const itemsContainer = document.querySelector('.cart-items');
+    if (itemsContainer && itemsContainer.children.length === 0) {
+      itemsContainer.innerHTML = '<div class="empty-cart">\n            <i class="fa fa-shopping-cart"></i>\n            <h3>Your cart is empty</h3>\n            <p>Add some delicious items to get started!</p>\n            <a href="menu.php" class="btn btn-brand">Browse Menu</a>\n          </div>';
     }
   };
 
@@ -136,21 +116,19 @@
   // Clear cart
   document.querySelectorAll('.js-clear-cart').forEach(btn => {
     btn.addEventListener('click', async (e) => {
-      e.preventDefault();
+      // Let the built-in confirm run (attached inline)
       if (!confirm('Clear entire cart?')) return;
+      e.preventDefault();
       try {
         const res = await postForm({ action: 'clear_cart' });
         if (res && res.ok) {
-          // Animate all items out, then reload
-          const cards = document.querySelectorAll('.crt-card');
-          cards.forEach((card, i) => {
-            card.style.transition = `all 0.35s cubic-bezier(.22,.61,.36,1) ${i * 0.06}s`;
-            card.style.opacity = '0';
-            card.style.transform = 'translateX(-20px) scale(0.96)';
-          });
-          setTimeout(() => window.location.reload(), 400 + cards.length * 60);
+          // Clear UI
+          const itemsContainer = document.querySelector('.cart-items');
+          if (itemsContainer) itemsContainer.innerHTML = '<div class="empty-cart">\n                <i class="fa fa-shopping-cart"></i>\n                <h3>Your cart is empty</h3>\n                <p>Add some delicious items to get started!</p>\n                <a href="menu.php" class="btn btn-brand">Browse Menu</a>\n              </div>';
+          updateGrandTotalUI(0);
         }
       } catch (err) {
+        // Fallback to form submit
         const form = btn.closest('form');
         form && form.submit();
       }

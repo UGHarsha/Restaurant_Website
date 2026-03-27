@@ -13,9 +13,12 @@ if(!isset($admin_id)){
 
 if(isset($_POST['submit'])){
 
-   $name = htmlspecialchars(trim($_POST['name']), ENT_QUOTES, 'UTF-8');
-   $pass = $_POST['pass'];
-   $cpass = $_POST['cpass'];
+   $name = $_POST['name'];
+   $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $pass = sha1($_POST['pass']);
+   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+   $cpass = sha1($_POST['cpass']);
+   $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
 
    $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
    $select_admin->execute([$name]);
@@ -26,9 +29,8 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'confirm passowrd not matched!';
       }else{
-         $hashed_pass = password_hash($pass, PASSWORD_DEFAULT);
          $insert_admin = $conn->prepare("INSERT INTO `admin`(name, password) VALUES(?,?)");
-         $insert_admin->execute([$name, $hashed_pass]);
+         $insert_admin->execute([$name, $cpass]);
          $message[] = 'new admin registered!';
       }
    }
