@@ -143,7 +143,7 @@
   margin: 8px 0 16px;
 }
 
-/* ── Mobile Responsive ───────────────────────── */
+/* Mobile responsive */
 @media (max-width: 600px) {
   .profile-page .user-profile-box {
     padding: 18px 14px;

@@ -39,7 +39,7 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* ── 992px ───────────────────────────────────────────────── */
+/* Up to 992px */
 @media (max-width: 992px) {
   .blog-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -49,7 +49,7 @@
   }
 }
 
-/* ── 768px ───────────────────────────────────────────────── */
+/* Up to 768px */
 @media (max-width: 768px) {
   .blog-hero {
     padding: 2.2rem 0;
@@ -65,7 +65,7 @@
   }
 }
 
-/* ── 576px ───────────────────────────────────────────────── */
+/* Up to 576px */
 @media (max-width: 576px) {
   .blog-grid {
     grid-template-columns: 1fr;
@@ -84,7 +84,7 @@
   }
 }
 
-/* ── 360px ───────────────────────────────────────────────── */
+/* Up to 360px */
 @media (max-width: 360px) {
   .blog-hero__title {
     font-size: 1.2rem;

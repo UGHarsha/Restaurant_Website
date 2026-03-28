@@ -1,9 +1,6 @@
-/* ============================================================
-   style.css  –  Shared / global styles for CeylonBites
-   Used by: index, menu, orders, category, cart, checkout, etc.
-   ============================================================ */
 
-/* ── Base ─────────────────────────────────────────────────── */
+
+/* Base styles */
 *, *::before, *::after { box-sizing: border-box; }
 
 :root {
@@ -30,7 +27,7 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a   { text-decoration: none; }
 
-/* ── Utility ──────────────────────────────────────────────── */
+/* Utility helpers */
 .container {
     width: 100%;
     max-width: 1200px;
@@ -40,7 +37,7 @@ a   { text-decoration: none; }
 .container-fluid { width: 100%; padding: 0 16px; }
 .text-center     { text-align: center; }
 
-/* ── Toast / Flash message ────────────────────────────────── */
+/* Toast and flash messages */
 .message-container {
     position: fixed;
     top: 80px;
@@ -69,7 +66,7 @@ a   { text-decoration: none; }
 .message i { cursor: pointer; opacity: .7; }
 .message i:hover { opacity: 1; }
 
-/* ── Page-topic banner ────────────────────────────────────── */
+/* Page banner */
 .container-topic {
     background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-brown) 100%);
     padding: 50px 20px;
@@ -85,7 +82,7 @@ a   { text-decoration: none; }
     margin: 0;
 }
 
-/* ── Section headings ─────────────────────────────────────── */
+/* Section heading styles */
 .heading {
     text-align: center;
     font-size: 2rem;
@@ -113,7 +110,7 @@ a   { text-decoration: none; }
     margin-bottom: 20px;
 }
 
-/* ── Empty state ──────────────────────────────────────────── */
+/* Empty-state block */
 .empty {
     background: var(--white);
     border: 2px dashed #e0cfa8;
@@ -126,7 +123,7 @@ a   { text-decoration: none; }
     grid-column: 1 / -1;
 }
 
-/* ── Generic box-container (orders, menu, admin lists) ─────── */
+/* Shared grid for cards */
 .box-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -134,7 +131,7 @@ a   { text-decoration: none; }
     padding: 10px 0;
 }
 
-/* ── Order / info box ─────────────────────────────────────── */
+/* Card styling */
 .box {
     background: var(--white);
     border-radius: var(--radius);
@@ -160,7 +157,7 @@ a   { text-decoration: none; }
     font-weight: 700;
 }
 
-/* ── Old-style products section (menu.php) ────────────────── */
+/* Legacy product cards */
 .products { padding: 10px 0; }
 
 .products .box-container {
@@ -239,7 +236,7 @@ a   { text-decoration: none; }
     background: var(--primary-brown);
 }
 
-/* ── Quantity input (menu/category) ──────────────────────── */
+/* Quantity field */
 .qty {
     width: 60px;
     padding: 8px;
@@ -252,7 +249,7 @@ a   { text-decoration: none; }
 }
 .qty:focus { outline: none; border-color: var(--primary-orange); }
 
-/* ── Branded buttons (shared) ────────────────────────────── */
+/* Reusable buttons */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -303,14 +300,14 @@ a   { text-decoration: none; }
     color: var(--primary-brown) !important;
 }
 
-/* ── Products section wrapper (category.php) ─────────────── */
+/* Category listing wrapper */
 .products-section {
     padding: 20px 16px 40px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* ── Bootstrap grid shims (for pages that use .row / .col-*) */
+/* Minimal grid helpers */
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -335,7 +332,7 @@ a   { text-decoration: none; }
 .align-items-center { align-items: center; }
 .text-center { text-align: center; }
 
-/* ── Responsive overrides ────────────────────────────────── */
+/* Responsive tweaks */
 @media (max-width: 992px) {
     .container-topic-heading { font-size: 2rem; }
     .heading  { font-size: 1.7rem; }
@@ -378,9 +375,7 @@ a   { text-decoration: none; }
     .btn { padding: 9px 16px; font-size: 0.88rem; }
 }
 
-/* ═══════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════ */
+/* Footer layout */
 .footer-section {
     background: linear-gradient(135deg, #8B4513 0%, #5D4037 60%, #3E2723 100%);
     color: rgba(255, 255, 255, 0.85);
@@ -465,7 +460,7 @@ a   { text-decoration: none; }
     padding-left: 6px;
 }
 
-/* Social Links */
+/* Footer social links */
 .social-links {
     display: flex;
     gap: 10px;
@@ -494,7 +489,7 @@ a   { text-decoration: none; }
     box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
 }
 
-/* Footer Bottom */
+/* Footer bottom bar */
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     text-align: center;
@@ -513,7 +508,7 @@ a   { text-decoration: none; }
     color: var(--primary-orange);
 }
 
-/* Footer responsive */
+/* Footer responsive tweaks */
 @media (min-width: 576px) {
     .footer-content {
         grid-template-columns: repeat(2, 1fr);

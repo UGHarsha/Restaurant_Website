@@ -533,11 +533,9 @@ section{
 
 
 
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — admin_style.css
-   ═══════════════════════════════════════════════ */
+/* Responsive tweaks for admin pages */
 
-/* ── 991px ── */
+/* Up to 991px */
 @media (max-width:991px){
 
    html{ font-size: 55%; }
@@ -546,7 +544,7 @@ section{
 
 }
 
-/* ── 768px ── */
+/* Up to 768px */
 @media (max-width:768px){
 
    #menu-btn{
@@ -582,7 +580,7 @@ section{
 
 }
 
-/* ── 576px ── */
+/* Up to 576px */
 @media (max-width:576px){
 
    html{ font-size: 52%; }
@@ -600,7 +598,7 @@ section{
 
 }
 
-/* ── 450px ── */
+/* Up to 450px */
 @media (max-width:450px){
 
    html{ font-size: 50%; }

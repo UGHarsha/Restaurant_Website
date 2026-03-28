@@ -1,6 +1,6 @@
 ﻿/* CATEGORY PAGE - category.css - Prefix: ctg- */
 
-/* ── HERO ── */
+/* Hero area */
 .ctg-hero {
     position: relative;
     padding: 80px 20px 60px;
@@ -65,7 +65,7 @@
     font-weight: 600;
 }
 
-/* ── PRODUCTS SECTION ── */
+/* Products section */
 .ctg-products {
     padding: 60px 20px 80px;
     background: #FFF8E7;
@@ -92,7 +92,7 @@
     gap: 20px;
 }
 
-/* ── CARD ── */
+/* Card container */
 .ctg-card {
     background: #fff;
     border-radius: 12px;
@@ -135,7 +135,7 @@
     letter-spacing: .4px;
 }
 
-/* ── CARD BODY ── */
+/* Card body */
 .ctg-card-body {
     padding: 14px;
     flex: 1;
@@ -148,6 +148,7 @@
     color: #2C1810;
     margin: 0 0 4px;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -160,6 +161,7 @@
 }
 .ctg-desc-text {
     display: -webkit-box;
+    line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -177,7 +179,7 @@
     text-decoration: underline;
 }
 
-/* ── CARD BOTTOM (PRICE + QTY + BUTTON) ── */
+/* Card footer (price, qty, button) */
 .ctg-card-bottom {
     margin-top: auto;
     display: flex;
@@ -251,7 +253,7 @@
     margin: 0;
 }
 
-/* ── ADD TO CART BUTTON ── */
+/* Add-to-cart button */
 .ctg-add-btn {
     width: 32px;
     height: 32px;
@@ -273,7 +275,7 @@
     box-shadow: 0 4px 14px rgba(245,158,11,.4);
 }
 
-/* ── EMPTY STATE ── */
+/* Empty state */
 .ctg-empty {
     text-align: center;
     padding: 80px 20px;
@@ -310,7 +312,7 @@
     transform: translateY(-2px);
 }
 
-/* ── DESCRIPTION MODAL ── */
+/* Description modal */
 .ctg-modal-overlay {
     position: fixed;
     inset: 0;
@@ -377,7 +379,7 @@
     margin: 0;
 }
 
-/* ── RESPONSIVE ── */
+/* Responsive tweaks */
 @media (max-width: 992px) {
     .ctg-hero-title { font-size: 2.2rem; }
     .ctg-grid { gap: 18px; }

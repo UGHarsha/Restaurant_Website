@@ -459,12 +459,10 @@
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ═══════════════════════════════════════
-   MOBILE RESPONSIVE  (≤ 992px)
-   ═══════════════════════════════════════ */
+/* Mobile responsive (≤ 992px) */
 @media (max-width: 992px) {
 
-    /* ── Header row: logo left | icons+burger right ── */
+    /* Header row layout */
     .header-container {
         height: auto;
         min-height: 60px;
@@ -507,7 +505,7 @@
         max-height: 500px;
     }
 
-    /* ── Nav list ── */
+    /* Navigation list */
     .nav-menu {
         display: flex;
         flex-direction: column;
@@ -549,7 +547,7 @@
         color: var(--white);
     }
 
-    /* ── Mobile dropdown sub-menu ── */
+    /* Mobile dropdown menu */
     .dropdown-menu {
         position: static !important;
         top: unset;
@@ -605,7 +603,7 @@
         transform: rotate(180deg);
     }
 
-    /* ── Header action icons ── */
+    /* Header action icons */
     .header-actions {
         display: flex;
         align-items: center;
@@ -624,7 +622,7 @@
         display: flex;
     }
 
-    /* ── User dropdown: centred on mobile ── */
+    /* User dropdown on mobile */
     .user-dropdown {
         left: 50%;
         right: auto;
@@ -637,7 +635,7 @@
     }
 }
 
-/* ── Extra-small phones ── */
+/* Extra-small screens */
 @media (max-width: 480px) {
     .header-container {
         padding: 8px 12px;
@@ -677,7 +675,7 @@
     }
 }
 
-/* ── Smooth entry animation for user dropdown ── */
+/* Dropdown animation */
 @keyframes dropIn {
     from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
     to   { opacity: 1; transform: translateX(-50%) translateY(0); }
